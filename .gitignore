@@ -6,3 +6,4 @@ package-lock.json
 .DS_Store
 .env
 lib
+REDACTED_AUTH_SESSION_browser.json
