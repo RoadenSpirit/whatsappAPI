@@ -7,3 +7,4 @@ package-lock.json
 .env
 lib
 REDACTED_AUTH_SESSION_browser.json
+yarn.lock
