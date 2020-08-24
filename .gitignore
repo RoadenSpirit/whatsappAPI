@@ -1,15 +1,12 @@
 node_modules
 REDACTED_AUTH_SESSION.json
 output.csv
-package-lock.json
 */.DS_Store
 .DS_Store
 .env
 REDACTED_AUTH_SESSION_browser.json
 yarn.lock
 browser-messages.json
-package-lock.json
-package-lock.json
 decoded-ws.json
 REDACTED_AUTH_SESSION2.json
 lib
