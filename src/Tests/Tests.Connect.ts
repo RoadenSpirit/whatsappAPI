@@ -372,4 +372,21 @@ describe ('Pending Requests', () => {
 
           conn.close ()
     })
+    it('should re-execute query on connection closed error', async () => {
+        const conn = makeConnection ()
+        //conn.pendingRequestTimeoutMs = 10_000
+        await conn.loadAuthInfo('./REDACTED_AUTH_SESSION.json').connect ()
+        const task: Promise<any> = conn.query({json: ['query', 'Status', conn.user.jid], waitForOpen: true})
+        
+        await delay(20)
+        conn['onMessageRecieved']('1234,["Pong",false]') // fake cancel the connection
+
+        await delay(2000)
+
+        const json = await task
+        
+        assert.ok (json.status)
+
+        conn.close ()
+  })
 })
