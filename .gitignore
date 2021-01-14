@@ -1,15 +1,12 @@
 node_modules
-REDACTED_AUTH_SESSION.json
+REDACTED_AUTH_SESSION*.json
 output.csv
 */.DS_Store
 .DS_Store
 .env
-REDACTED_AUTH_SESSION_browser.json
 browser-messages.json
 decoded-ws.json
-REDACTED_AUTH_SESSION2.json
 lib
 docs
 browser-token.json
-REDACTED_AUTH_SESSION_messcat.json
 Proxy
