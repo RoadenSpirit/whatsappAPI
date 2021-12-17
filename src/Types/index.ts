@@ -4,11 +4,11 @@ export * from './Chat'
 export * from './Contact'
 export * from './State'
 export * from './Message'
+export * from './Legacy'
+export * from './Socket'
+export * from './Events'
 
 import type EventEmitter from "events"
-import type { Agent } from "https"
-import type { Logger } from "pino"
-import type { URL } from "url"
 import type NodeCache from 'node-cache'
 
 import { AuthenticationState, AuthenticationCreds } from './Auth'
@@ -19,40 +19,11 @@ import { ConnectionState } from './State'
 import { GroupMetadata, ParticipantAction } from './GroupMetadata'
 import { MessageInfoUpdate, MessageUpdateType, WAMessage, WAMessageUpdate, WAMessageKey } from './Message'
 import { proto } from '../../WAProto'
+import { CommonSocketConfig } from './Socket'
 
-export type WAVersion = [number, number, number]
-export type WABrowserDescription = [string, string, string]
-export type ReconnectMode = 'no-reconnects' | 'on-any-error' | 'on-connection-error'
-
-export type SocketConfig = {
-    /** provide an auth state object to maintain the auth state */
-    auth?: AuthenticationState
-    /** the WS url to connect to WA */
-    waWebSocketUrl: string | URL 
-    /** Fails the connection if the socket times out in this interval */
-	connectTimeoutMs: number
-    /** Default timeout for queries, undefined for no timeout */
-    defaultQueryTimeoutMs: number | undefined
-    /** ping-pong interval for WS connection */
-    keepAliveIntervalMs: number
-    /** proxy agent */
-	agent?: Agent
-    /** pino logger */
-	logger: Logger
-    /** version to connect with */
-    version: WAVersion
-    /** override browser config */
-	browser: WABrowserDescription
-	/** agent used for fetch requests -- uploading/downloading media */
-	fetchAgent?: Agent
-    /** should the QR be printed in the terminal */
-    printQRInTerminal: boolean
-    /** should events be emitted for actions done by this socket connection */
-    emitOwnEvents: boolean
+export type SocketConfig = CommonSocketConfig<AuthenticationState> & {
     /** provide a cache to store a user's device list */
     userDevicesCache?: NodeCache
-    /** provide a cache to store media, so does not have to be re-uploaded */
-    mediaCache?: NodeCache
     /** map to store the retry counts for failed messages */
     msgRetryCounterMap?: { [msgId: string]: number }
     /** custom domains to push media via */
@@ -67,11 +38,12 @@ export type SocketConfig = {
 export enum DisconnectReason {
 	connectionClosed = 428,
 	connectionLost = 408,
+    connectionReplaced = 440,
     timedOut = 408,
 	loggedOut = 401,
     badSession = 500,
     restartRequired = 410,
-    notJoinedBeta = 403
+    multideviceMismatch = 403
 }
 
 export type WAInitResponse = {
@@ -104,11 +76,11 @@ export type WABusinessProfile = {
 
 export type CurveKeyPair = { private: Uint8Array; public: Uint8Array }
 
-export type BaileysEventMap = {
+export type BaileysEventMap<T> = {
     /** connection state has been updated -- WS closed, opened, connecting etc. */
 	'connection.update': Partial<ConnectionState>
     /** credentials updated -- some metadata, keys or something */
-    'creds.update': Partial<AuthenticationCreds>
+    'creds.update': Partial<T>
     /** set chats (history sync), messages are reverse chronologically sorted */
     'chats.set': { chats: Chat[], messages: WAMessage[] }
     /** upsert chats */
@@ -141,9 +113,12 @@ export type BaileysEventMap = {
     'blocklist.set': { blocklist: string[] }
     'blocklist.update': { blocklist: string[], type: 'add' | 'remove' }
 }
-export interface BaileysEventEmitter extends EventEmitter {
-	on<T extends keyof BaileysEventMap>(event: T, listener: (arg: BaileysEventMap[T]) => void): this
-    off<T extends keyof BaileysEventMap>(event: T, listener: (arg: BaileysEventMap[T]) => void): this
-    removeAllListeners<T extends keyof BaileysEventMap>(event: T): this
-	emit<T extends keyof BaileysEventMap>(event: T, arg: BaileysEventMap[T]): boolean
+
+export interface CommonBaileysEventEmitter<Creds> extends EventEmitter {
+	on<T extends keyof BaileysEventMap<Creds>>(event: T, listener: (arg: BaileysEventMap<Creds>[T]) => void): this
+    off<T extends keyof BaileysEventMap<Creds>>(event: T, listener: (arg: BaileysEventMap<Creds>[T]) => void): this
+    removeAllListeners<T extends keyof BaileysEventMap<Creds>>(event: T): this
+	emit<T extends keyof BaileysEventMap<Creds>>(event: T, arg: BaileysEventMap<Creds>[T]): boolean
 }
+
+export type BaileysEventEmitter = CommonBaileysEventEmitter<AuthenticationCreds>
