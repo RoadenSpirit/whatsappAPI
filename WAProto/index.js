@@ -3134,6 +3134,934 @@ $root.proto = (function() {
         return BizIdentityInfo;
     })();
 
+    proto.BotAvatarMetadata = (function() {
+
+        /**
+         * Properties of a BotAvatarMetadata.
+         * @memberof proto
+         * @interface IBotAvatarMetadata
+         * @property {number|null} [sentiment] BotAvatarMetadata sentiment
+         * @property {Array.<proto.BotAvatarMetadata.IPlaybackMetadata>|null} [dynamicVideoList] BotAvatarMetadata dynamicVideoList
+         */
+
+        /**
+         * Constructs a new BotAvatarMetadata.
+         * @memberof proto
+         * @classdesc Represents a BotAvatarMetadata.
+         * @implements IBotAvatarMetadata
+         * @constructor
+         * @param {proto.IBotAvatarMetadata=} [properties] Properties to set
+         */
+        function BotAvatarMetadata(properties) {
+            this.dynamicVideoList = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BotAvatarMetadata sentiment.
+         * @member {number} sentiment
+         * @memberof proto.BotAvatarMetadata
+         * @instance
+         */
+        BotAvatarMetadata.prototype.sentiment = 0;
+
+        /**
+         * BotAvatarMetadata dynamicVideoList.
+         * @member {Array.<proto.BotAvatarMetadata.IPlaybackMetadata>} dynamicVideoList
+         * @memberof proto.BotAvatarMetadata
+         * @instance
+         */
+        BotAvatarMetadata.prototype.dynamicVideoList = $util.emptyArray;
+
+        /**
+         * Creates a new BotAvatarMetadata instance using the specified properties.
+         * @function create
+         * @memberof proto.BotAvatarMetadata
+         * @static
+         * @param {proto.IBotAvatarMetadata=} [properties] Properties to set
+         * @returns {proto.BotAvatarMetadata} BotAvatarMetadata instance
+         */
+        BotAvatarMetadata.create = function create(properties) {
+            return new BotAvatarMetadata(properties);
+        };
+
+        /**
+         * Encodes the specified BotAvatarMetadata message. Does not implicitly {@link proto.BotAvatarMetadata.verify|verify} messages.
+         * @function encode
+         * @memberof proto.BotAvatarMetadata
+         * @static
+         * @param {proto.IBotAvatarMetadata} message BotAvatarMetadata message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BotAvatarMetadata.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.sentiment != null && Object.hasOwnProperty.call(message, "sentiment"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.sentiment);
+            if (message.dynamicVideoList != null && message.dynamicVideoList.length)
+                for (var i = 0; i < message.dynamicVideoList.length; ++i)
+                    $root.proto.BotAvatarMetadata.PlaybackMetadata.encode(message.dynamicVideoList[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BotAvatarMetadata message, length delimited. Does not implicitly {@link proto.BotAvatarMetadata.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof proto.BotAvatarMetadata
+         * @static
+         * @param {proto.IBotAvatarMetadata} message BotAvatarMetadata message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BotAvatarMetadata.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BotAvatarMetadata message from the specified reader or buffer.
+         * @function decode
+         * @memberof proto.BotAvatarMetadata
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {proto.BotAvatarMetadata} BotAvatarMetadata
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BotAvatarMetadata.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.proto.BotAvatarMetadata();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.sentiment = reader.uint32();
+                    break;
+                case 2:
+                    if (!(message.dynamicVideoList && message.dynamicVideoList.length))
+                        message.dynamicVideoList = [];
+                    message.dynamicVideoList.push($root.proto.BotAvatarMetadata.PlaybackMetadata.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BotAvatarMetadata message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof proto.BotAvatarMetadata
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {proto.BotAvatarMetadata} BotAvatarMetadata
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BotAvatarMetadata.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BotAvatarMetadata message.
+         * @function verify
+         * @memberof proto.BotAvatarMetadata
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BotAvatarMetadata.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.sentiment != null && message.hasOwnProperty("sentiment"))
+                if (!$util.isInteger(message.sentiment))
+                    return "sentiment: integer expected";
+            if (message.dynamicVideoList != null && message.hasOwnProperty("dynamicVideoList")) {
+                if (!Array.isArray(message.dynamicVideoList))
+                    return "dynamicVideoList: array expected";
+                for (var i = 0; i < message.dynamicVideoList.length; ++i) {
+                    var error = $root.proto.BotAvatarMetadata.PlaybackMetadata.verify(message.dynamicVideoList[i]);
+                    if (error)
+                        return "dynamicVideoList." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a BotAvatarMetadata message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof proto.BotAvatarMetadata
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {proto.BotAvatarMetadata} BotAvatarMetadata
+         */
+        BotAvatarMetadata.fromObject = function fromObject(object) {
+            if (object instanceof $root.proto.BotAvatarMetadata)
+                return object;
+            var message = new $root.proto.BotAvatarMetadata();
+            if (object.sentiment != null)
+                message.sentiment = object.sentiment >>> 0;
+            if (object.dynamicVideoList) {
+                if (!Array.isArray(object.dynamicVideoList))
+                    throw TypeError(".proto.BotAvatarMetadata.dynamicVideoList: array expected");
+                message.dynamicVideoList = [];
+                for (var i = 0; i < object.dynamicVideoList.length; ++i) {
+                    if (typeof object.dynamicVideoList[i] !== "object")
+                        throw TypeError(".proto.BotAvatarMetadata.dynamicVideoList: object expected");
+                    message.dynamicVideoList[i] = $root.proto.BotAvatarMetadata.PlaybackMetadata.fromObject(object.dynamicVideoList[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BotAvatarMetadata message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof proto.BotAvatarMetadata
+         * @static
+         * @param {proto.BotAvatarMetadata} message BotAvatarMetadata
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BotAvatarMetadata.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.dynamicVideoList = [];
+            if (options.defaults)
+                object.sentiment = 0;
+            if (message.sentiment != null && message.hasOwnProperty("sentiment"))
+                object.sentiment = message.sentiment;
+            if (message.dynamicVideoList && message.dynamicVideoList.length) {
+                object.dynamicVideoList = [];
+                for (var j = 0; j < message.dynamicVideoList.length; ++j)
+                    object.dynamicVideoList[j] = $root.proto.BotAvatarMetadata.PlaybackMetadata.toObject(message.dynamicVideoList[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this BotAvatarMetadata to JSON.
+         * @function toJSON
+         * @memberof proto.BotAvatarMetadata
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BotAvatarMetadata.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        BotAvatarMetadata.PlaybackMetadata = (function() {
+
+            /**
+             * Properties of a PlaybackMetadata.
+             * @memberof proto.BotAvatarMetadata
+             * @interface IPlaybackMetadata
+             * @property {string|null} [sdProgressiveUrl] PlaybackMetadata sdProgressiveUrl
+             * @property {string|null} [hdProgressiveUrl] PlaybackMetadata hdProgressiveUrl
+             * @property {string|null} [dashManifest] PlaybackMetadata dashManifest
+             * @property {number|null} [sentiment] PlaybackMetadata sentiment
+             * @property {number|null} [durationMs] PlaybackMetadata durationMs
+             * @property {number|Long|null} [videoID] PlaybackMetadata videoID
+             */
+
+            /**
+             * Constructs a new PlaybackMetadata.
+             * @memberof proto.BotAvatarMetadata
+             * @classdesc Represents a PlaybackMetadata.
+             * @implements IPlaybackMetadata
+             * @constructor
+             * @param {proto.BotAvatarMetadata.IPlaybackMetadata=} [properties] Properties to set
+             */
+            function PlaybackMetadata(properties) {
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * PlaybackMetadata sdProgressiveUrl.
+             * @member {string} sdProgressiveUrl
+             * @memberof proto.BotAvatarMetadata.PlaybackMetadata
+             * @instance
+             */
+            PlaybackMetadata.prototype.sdProgressiveUrl = "";
+
+            /**
+             * PlaybackMetadata hdProgressiveUrl.
+             * @member {string} hdProgressiveUrl
+             * @memberof proto.BotAvatarMetadata.PlaybackMetadata
+             * @instance
+             */
+            PlaybackMetadata.prototype.hdProgressiveUrl = "";
+
+            /**
+             * PlaybackMetadata dashManifest.
+             * @member {string} dashManifest
+             * @memberof proto.BotAvatarMetadata.PlaybackMetadata
+             * @instance
+             */
+            PlaybackMetadata.prototype.dashManifest = "";
+
+            /**
+             * PlaybackMetadata sentiment.
+             * @member {number} sentiment
+             * @memberof proto.BotAvatarMetadata.PlaybackMetadata
+             * @instance
+             */
+            PlaybackMetadata.prototype.sentiment = 0;
+
+            /**
+             * PlaybackMetadata durationMs.
+             * @member {number} durationMs
+             * @memberof proto.BotAvatarMetadata.PlaybackMetadata
+             * @instance
+             */
+            PlaybackMetadata.prototype.durationMs = 0;
+
+            /**
+             * PlaybackMetadata videoID.
+             * @member {number|Long} videoID
+             * @memberof proto.BotAvatarMetadata.PlaybackMetadata
+             * @instance
+             */
+            PlaybackMetadata.prototype.videoID = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+            /**
+             * Creates a new PlaybackMetadata instance using the specified properties.
+             * @function create
+             * @memberof proto.BotAvatarMetadata.PlaybackMetadata
+             * @static
+             * @param {proto.BotAvatarMetadata.IPlaybackMetadata=} [properties] Properties to set
+             * @returns {proto.BotAvatarMetadata.PlaybackMetadata} PlaybackMetadata instance
+             */
+            PlaybackMetadata.create = function create(properties) {
+                return new PlaybackMetadata(properties);
+            };
+
+            /**
+             * Encodes the specified PlaybackMetadata message. Does not implicitly {@link proto.BotAvatarMetadata.PlaybackMetadata.verify|verify} messages.
+             * @function encode
+             * @memberof proto.BotAvatarMetadata.PlaybackMetadata
+             * @static
+             * @param {proto.BotAvatarMetadata.IPlaybackMetadata} message PlaybackMetadata message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            PlaybackMetadata.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.sdProgressiveUrl != null && Object.hasOwnProperty.call(message, "sdProgressiveUrl"))
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.sdProgressiveUrl);
+                if (message.hdProgressiveUrl != null && Object.hasOwnProperty.call(message, "hdProgressiveUrl"))
+                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.hdProgressiveUrl);
+                if (message.dashManifest != null && Object.hasOwnProperty.call(message, "dashManifest"))
+                    writer.uint32(/* id 3, wireType 2 =*/26).string(message.dashManifest);
+                if (message.sentiment != null && Object.hasOwnProperty.call(message, "sentiment"))
+                    writer.uint32(/* id 4, wireType 0 =*/32).uint32(message.sentiment);
+                if (message.durationMs != null && Object.hasOwnProperty.call(message, "durationMs"))
+                    writer.uint32(/* id 5, wireType 0 =*/40).uint32(message.durationMs);
+                if (message.videoID != null && Object.hasOwnProperty.call(message, "videoID"))
+                    writer.uint32(/* id 6, wireType 0 =*/48).int64(message.videoID);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified PlaybackMetadata message, length delimited. Does not implicitly {@link proto.BotAvatarMetadata.PlaybackMetadata.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof proto.BotAvatarMetadata.PlaybackMetadata
+             * @static
+             * @param {proto.BotAvatarMetadata.IPlaybackMetadata} message PlaybackMetadata message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            PlaybackMetadata.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a PlaybackMetadata message from the specified reader or buffer.
+             * @function decode
+             * @memberof proto.BotAvatarMetadata.PlaybackMetadata
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {proto.BotAvatarMetadata.PlaybackMetadata} PlaybackMetadata
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            PlaybackMetadata.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.proto.BotAvatarMetadata.PlaybackMetadata();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.sdProgressiveUrl = reader.string();
+                        break;
+                    case 2:
+                        message.hdProgressiveUrl = reader.string();
+                        break;
+                    case 3:
+                        message.dashManifest = reader.string();
+                        break;
+                    case 4:
+                        message.sentiment = reader.uint32();
+                        break;
+                    case 5:
+                        message.durationMs = reader.uint32();
+                        break;
+                    case 6:
+                        message.videoID = reader.int64();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a PlaybackMetadata message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof proto.BotAvatarMetadata.PlaybackMetadata
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {proto.BotAvatarMetadata.PlaybackMetadata} PlaybackMetadata
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            PlaybackMetadata.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a PlaybackMetadata message.
+             * @function verify
+             * @memberof proto.BotAvatarMetadata.PlaybackMetadata
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            PlaybackMetadata.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.sdProgressiveUrl != null && message.hasOwnProperty("sdProgressiveUrl"))
+                    if (!$util.isString(message.sdProgressiveUrl))
+                        return "sdProgressiveUrl: string expected";
+                if (message.hdProgressiveUrl != null && message.hasOwnProperty("hdProgressiveUrl"))
+                    if (!$util.isString(message.hdProgressiveUrl))
+                        return "hdProgressiveUrl: string expected";
+                if (message.dashManifest != null && message.hasOwnProperty("dashManifest"))
+                    if (!$util.isString(message.dashManifest))
+                        return "dashManifest: string expected";
+                if (message.sentiment != null && message.hasOwnProperty("sentiment"))
+                    if (!$util.isInteger(message.sentiment))
+                        return "sentiment: integer expected";
+                if (message.durationMs != null && message.hasOwnProperty("durationMs"))
+                    if (!$util.isInteger(message.durationMs))
+                        return "durationMs: integer expected";
+                if (message.videoID != null && message.hasOwnProperty("videoID"))
+                    if (!$util.isInteger(message.videoID) && !(message.videoID && $util.isInteger(message.videoID.low) && $util.isInteger(message.videoID.high)))
+                        return "videoID: integer|Long expected";
+                return null;
+            };
+
+            /**
+             * Creates a PlaybackMetadata message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof proto.BotAvatarMetadata.PlaybackMetadata
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {proto.BotAvatarMetadata.PlaybackMetadata} PlaybackMetadata
+             */
+            PlaybackMetadata.fromObject = function fromObject(object) {
+                if (object instanceof $root.proto.BotAvatarMetadata.PlaybackMetadata)
+                    return object;
+                var message = new $root.proto.BotAvatarMetadata.PlaybackMetadata();
+                if (object.sdProgressiveUrl != null)
+                    message.sdProgressiveUrl = String(object.sdProgressiveUrl);
+                if (object.hdProgressiveUrl != null)
+                    message.hdProgressiveUrl = String(object.hdProgressiveUrl);
+                if (object.dashManifest != null)
+                    message.dashManifest = String(object.dashManifest);
+                if (object.sentiment != null)
+                    message.sentiment = object.sentiment >>> 0;
+                if (object.durationMs != null)
+                    message.durationMs = object.durationMs >>> 0;
+                if (object.videoID != null)
+                    if ($util.Long)
+                        (message.videoID = $util.Long.fromValue(object.videoID)).unsigned = false;
+                    else if (typeof object.videoID === "string")
+                        message.videoID = parseInt(object.videoID, 10);
+                    else if (typeof object.videoID === "number")
+                        message.videoID = object.videoID;
+                    else if (typeof object.videoID === "object")
+                        message.videoID = new $util.LongBits(object.videoID.low >>> 0, object.videoID.high >>> 0).toNumber();
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a PlaybackMetadata message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof proto.BotAvatarMetadata.PlaybackMetadata
+             * @static
+             * @param {proto.BotAvatarMetadata.PlaybackMetadata} message PlaybackMetadata
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            PlaybackMetadata.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.defaults) {
+                    object.sdProgressiveUrl = "";
+                    object.hdProgressiveUrl = "";
+                    object.dashManifest = "";
+                    object.sentiment = 0;
+                    object.durationMs = 0;
+                    if ($util.Long) {
+                        var long = new $util.Long(0, 0, false);
+                        object.videoID = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                    } else
+                        object.videoID = options.longs === String ? "0" : 0;
+                }
+                if (message.sdProgressiveUrl != null && message.hasOwnProperty("sdProgressiveUrl"))
+                    object.sdProgressiveUrl = message.sdProgressiveUrl;
+                if (message.hdProgressiveUrl != null && message.hasOwnProperty("hdProgressiveUrl"))
+                    object.hdProgressiveUrl = message.hdProgressiveUrl;
+                if (message.dashManifest != null && message.hasOwnProperty("dashManifest"))
+                    object.dashManifest = message.dashManifest;
+                if (message.sentiment != null && message.hasOwnProperty("sentiment"))
+                    object.sentiment = message.sentiment;
+                if (message.durationMs != null && message.hasOwnProperty("durationMs"))
+                    object.durationMs = message.durationMs;
+                if (message.videoID != null && message.hasOwnProperty("videoID"))
+                    if (typeof message.videoID === "number")
+                        object.videoID = options.longs === String ? String(message.videoID) : message.videoID;
+                    else
+                        object.videoID = options.longs === String ? $util.Long.prototype.toString.call(message.videoID) : options.longs === Number ? new $util.LongBits(message.videoID.low >>> 0, message.videoID.high >>> 0).toNumber() : message.videoID;
+                return object;
+            };
+
+            /**
+             * Converts this PlaybackMetadata to JSON.
+             * @function toJSON
+             * @memberof proto.BotAvatarMetadata.PlaybackMetadata
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            PlaybackMetadata.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return PlaybackMetadata;
+        })();
+
+        return BotAvatarMetadata;
+    })();
+
+    proto.BotData = (function() {
+
+        /**
+         * Properties of a BotData.
+         * @memberof proto
+         * @interface IBotData
+         * @property {proto.IMessageKey} targetMessageKey BotData targetMessageKey
+         */
+
+        /**
+         * Constructs a new BotData.
+         * @memberof proto
+         * @classdesc Represents a BotData.
+         * @implements IBotData
+         * @constructor
+         * @param {proto.IBotData=} [properties] Properties to set
+         */
+        function BotData(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BotData targetMessageKey.
+         * @member {proto.IMessageKey} targetMessageKey
+         * @memberof proto.BotData
+         * @instance
+         */
+        BotData.prototype.targetMessageKey = null;
+
+        /**
+         * Creates a new BotData instance using the specified properties.
+         * @function create
+         * @memberof proto.BotData
+         * @static
+         * @param {proto.IBotData=} [properties] Properties to set
+         * @returns {proto.BotData} BotData instance
+         */
+        BotData.create = function create(properties) {
+            return new BotData(properties);
+        };
+
+        /**
+         * Encodes the specified BotData message. Does not implicitly {@link proto.BotData.verify|verify} messages.
+         * @function encode
+         * @memberof proto.BotData
+         * @static
+         * @param {proto.IBotData} message BotData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BotData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            $root.proto.MessageKey.encode(message.targetMessageKey, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BotData message, length delimited. Does not implicitly {@link proto.BotData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof proto.BotData
+         * @static
+         * @param {proto.IBotData} message BotData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BotData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BotData message from the specified reader or buffer.
+         * @function decode
+         * @memberof proto.BotData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {proto.BotData} BotData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BotData.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.proto.BotData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.targetMessageKey = $root.proto.MessageKey.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            if (!message.hasOwnProperty("targetMessageKey"))
+                throw $util.ProtocolError("missing required 'targetMessageKey'", { instance: message });
+            return message;
+        };
+
+        /**
+         * Decodes a BotData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof proto.BotData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {proto.BotData} BotData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BotData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BotData message.
+         * @function verify
+         * @memberof proto.BotData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BotData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            {
+                var error = $root.proto.MessageKey.verify(message.targetMessageKey);
+                if (error)
+                    return "targetMessageKey." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a BotData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof proto.BotData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {proto.BotData} BotData
+         */
+        BotData.fromObject = function fromObject(object) {
+            if (object instanceof $root.proto.BotData)
+                return object;
+            var message = new $root.proto.BotData();
+            if (object.targetMessageKey != null) {
+                if (typeof object.targetMessageKey !== "object")
+                    throw TypeError(".proto.BotData.targetMessageKey: object expected");
+                message.targetMessageKey = $root.proto.MessageKey.fromObject(object.targetMessageKey);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BotData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof proto.BotData
+         * @static
+         * @param {proto.BotData} message BotData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BotData.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.targetMessageKey = null;
+            if (message.targetMessageKey != null && message.hasOwnProperty("targetMessageKey"))
+                object.targetMessageKey = $root.proto.MessageKey.toObject(message.targetMessageKey, options);
+            return object;
+        };
+
+        /**
+         * Converts this BotData to JSON.
+         * @function toJSON
+         * @memberof proto.BotData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BotData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BotData;
+    })();
+
+    proto.BotMetadata = (function() {
+
+        /**
+         * Properties of a BotMetadata.
+         * @memberof proto
+         * @interface IBotMetadata
+         * @property {proto.IBotAvatarMetadata|null} [avatarMetadata] BotMetadata avatarMetadata
+         */
+
+        /**
+         * Constructs a new BotMetadata.
+         * @memberof proto
+         * @classdesc Represents a BotMetadata.
+         * @implements IBotMetadata
+         * @constructor
+         * @param {proto.IBotMetadata=} [properties] Properties to set
+         */
+        function BotMetadata(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BotMetadata avatarMetadata.
+         * @member {proto.IBotAvatarMetadata|null|undefined} avatarMetadata
+         * @memberof proto.BotMetadata
+         * @instance
+         */
+        BotMetadata.prototype.avatarMetadata = null;
+
+        /**
+         * Creates a new BotMetadata instance using the specified properties.
+         * @function create
+         * @memberof proto.BotMetadata
+         * @static
+         * @param {proto.IBotMetadata=} [properties] Properties to set
+         * @returns {proto.BotMetadata} BotMetadata instance
+         */
+        BotMetadata.create = function create(properties) {
+            return new BotMetadata(properties);
+        };
+
+        /**
+         * Encodes the specified BotMetadata message. Does not implicitly {@link proto.BotMetadata.verify|verify} messages.
+         * @function encode
+         * @memberof proto.BotMetadata
+         * @static
+         * @param {proto.IBotMetadata} message BotMetadata message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BotMetadata.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.avatarMetadata != null && Object.hasOwnProperty.call(message, "avatarMetadata"))
+                $root.proto.BotAvatarMetadata.encode(message.avatarMetadata, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BotMetadata message, length delimited. Does not implicitly {@link proto.BotMetadata.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof proto.BotMetadata
+         * @static
+         * @param {proto.IBotMetadata} message BotMetadata message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BotMetadata.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BotMetadata message from the specified reader or buffer.
+         * @function decode
+         * @memberof proto.BotMetadata
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {proto.BotMetadata} BotMetadata
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BotMetadata.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.proto.BotMetadata();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.avatarMetadata = $root.proto.BotAvatarMetadata.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BotMetadata message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof proto.BotMetadata
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {proto.BotMetadata} BotMetadata
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BotMetadata.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BotMetadata message.
+         * @function verify
+         * @memberof proto.BotMetadata
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BotMetadata.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.avatarMetadata != null && message.hasOwnProperty("avatarMetadata")) {
+                var error = $root.proto.BotAvatarMetadata.verify(message.avatarMetadata);
+                if (error)
+                    return "avatarMetadata." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a BotMetadata message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof proto.BotMetadata
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {proto.BotMetadata} BotMetadata
+         */
+        BotMetadata.fromObject = function fromObject(object) {
+            if (object instanceof $root.proto.BotMetadata)
+                return object;
+            var message = new $root.proto.BotMetadata();
+            if (object.avatarMetadata != null) {
+                if (typeof object.avatarMetadata !== "object")
+                    throw TypeError(".proto.BotMetadata.avatarMetadata: object expected");
+                message.avatarMetadata = $root.proto.BotAvatarMetadata.fromObject(object.avatarMetadata);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BotMetadata message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof proto.BotMetadata
+         * @static
+         * @param {proto.BotMetadata} message BotMetadata
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BotMetadata.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.avatarMetadata = null;
+            if (message.avatarMetadata != null && message.hasOwnProperty("avatarMetadata"))
+                object.avatarMetadata = $root.proto.BotAvatarMetadata.toObject(message.avatarMetadata, options);
+            return object;
+        };
+
+        /**
+         * Converts this BotMetadata to JSON.
+         * @function toJSON
+         * @memberof proto.BotMetadata
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BotMetadata.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BotMetadata;
+    })();
+
     proto.CertChain = (function() {
 
         /**
@@ -7177,6 +8105,7 @@ $root.proto = (function() {
              * @property {string|null} [localeCountryIso31661Alpha2] UserAgent localeCountryIso31661Alpha2
              * @property {string|null} [deviceBoard] UserAgent deviceBoard
              * @property {string|null} [deviceExpId] UserAgent deviceExpId
+             * @property {proto.ClientPayload.UserAgent.DeviceType|null} [deviceType] UserAgent deviceType
              */
 
             /**
@@ -7307,6 +8236,14 @@ $root.proto = (function() {
             UserAgent.prototype.deviceExpId = "";
 
             /**
+             * UserAgent deviceType.
+             * @member {proto.ClientPayload.UserAgent.DeviceType} deviceType
+             * @memberof proto.ClientPayload.UserAgent
+             * @instance
+             */
+            UserAgent.prototype.deviceType = 0;
+
+            /**
              * Creates a new UserAgent instance using the specified properties.
              * @function create
              * @memberof proto.ClientPayload.UserAgent
@@ -7358,6 +8295,8 @@ $root.proto = (function() {
                     writer.uint32(/* id 13, wireType 2 =*/106).string(message.deviceBoard);
                 if (message.deviceExpId != null && Object.hasOwnProperty.call(message, "deviceExpId"))
                     writer.uint32(/* id 14, wireType 2 =*/114).string(message.deviceExpId);
+                if (message.deviceType != null && Object.hasOwnProperty.call(message, "deviceType"))
+                    writer.uint32(/* id 15, wireType 0 =*/120).int32(message.deviceType);
                 return writer;
             };
 
@@ -7433,6 +8372,9 @@ $root.proto = (function() {
                         break;
                     case 14:
                         message.deviceExpId = reader.string();
+                        break;
+                    case 15:
+                        message.deviceType = reader.int32();
                         break;
                     default:
                         reader.skipType(tag & 7);
@@ -7557,6 +8499,17 @@ $root.proto = (function() {
                 if (message.deviceExpId != null && message.hasOwnProperty("deviceExpId"))
                     if (!$util.isString(message.deviceExpId))
                         return "deviceExpId: string expected";
+                if (message.deviceType != null && message.hasOwnProperty("deviceType"))
+                    switch (message.deviceType) {
+                    default:
+                        return "deviceType: enum value expected";
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                        break;
+                    }
                 return null;
             };
 
@@ -7755,6 +8708,28 @@ $root.proto = (function() {
                     message.deviceBoard = String(object.deviceBoard);
                 if (object.deviceExpId != null)
                     message.deviceExpId = String(object.deviceExpId);
+                switch (object.deviceType) {
+                case "PHONE":
+                case 0:
+                    message.deviceType = 0;
+                    break;
+                case "TABLET":
+                case 1:
+                    message.deviceType = 1;
+                    break;
+                case "DESKTOP":
+                case 2:
+                    message.deviceType = 2;
+                    break;
+                case "WEARABLE":
+                case 3:
+                    message.deviceType = 3;
+                    break;
+                case "VR":
+                case 4:
+                    message.deviceType = 4;
+                    break;
+                }
                 return message;
             };
 
@@ -7786,6 +8761,7 @@ $root.proto = (function() {
                     object.localeCountryIso31661Alpha2 = "";
                     object.deviceBoard = "";
                     object.deviceExpId = "";
+                    object.deviceType = options.enums === String ? "PHONE" : 0;
                 }
                 if (message.platform != null && message.hasOwnProperty("platform"))
                     object.platform = options.enums === String ? $root.proto.ClientPayload.UserAgent.Platform[message.platform] : message.platform;
@@ -7815,6 +8791,8 @@ $root.proto = (function() {
                     object.deviceBoard = message.deviceBoard;
                 if (message.deviceExpId != null && message.hasOwnProperty("deviceExpId"))
                     object.deviceExpId = message.deviceExpId;
+                if (message.deviceType != null && message.hasOwnProperty("deviceType"))
+                    object.deviceType = options.enums === String ? $root.proto.ClientPayload.UserAgent.DeviceType[message.deviceType] : message.deviceType;
                 return object;
             };
 
@@ -8103,6 +9081,26 @@ $root.proto = (function() {
                 };
 
                 return AppVersion;
+            })();
+
+            /**
+             * DeviceType enum.
+             * @name proto.ClientPayload.UserAgent.DeviceType
+             * @enum {number}
+             * @property {number} PHONE=0 PHONE value
+             * @property {number} TABLET=1 TABLET value
+             * @property {number} DESKTOP=2 DESKTOP value
+             * @property {number} WEARABLE=3 WEARABLE value
+             * @property {number} VR=4 VR value
+             */
+            UserAgent.DeviceType = (function() {
+                var valuesById = {}, values = Object.create(valuesById);
+                values[valuesById[0] = "PHONE"] = 0;
+                values[valuesById[1] = "TABLET"] = 1;
+                values[valuesById[2] = "DESKTOP"] = 2;
+                values[valuesById[3] = "WEARABLE"] = 3;
+                values[valuesById[4] = "VR"] = 4;
+                return values;
             })();
 
             /**
@@ -12987,6 +13985,7 @@ $root.proto = (function() {
                 case 18:
                 case 19:
                 case 20:
+                case 21:
                     break;
                 }
             if (message.requireFullSync != null && message.hasOwnProperty("requireFullSync"))
@@ -13103,6 +14102,10 @@ $root.proto = (function() {
             case "AR_DEVICE":
             case 20:
                 message.platformType = 20;
+                break;
+            case "UWP":
+            case 21:
+                message.platformType = 21;
                 break;
             }
             if (object.requireFullSync != null)
@@ -13736,6 +14739,7 @@ $root.proto = (function() {
          * @property {number} WEAR_OS=18 WEAR_OS value
          * @property {number} AR_WRIST=19 AR_WRIST value
          * @property {number} AR_DEVICE=20 AR_DEVICE value
+         * @property {number} UWP=21 UWP value
          */
         DeviceProps.PlatformType = (function() {
             var valuesById = {}, values = Object.create(valuesById);
@@ -13760,6 +14764,7 @@ $root.proto = (function() {
             values[valuesById[18] = "WEAR_OS"] = 18;
             values[valuesById[19] = "AR_WRIST"] = 19;
             values[valuesById[20] = "AR_DEVICE"] = 20;
+            values[valuesById[21] = "UWP"] = 21;
             return values;
         })();
 
@@ -14772,6 +15777,420 @@ $root.proto = (function() {
         };
 
         return ExternalBlobReference;
+    })();
+
+    proto.FutureMessageData = (function() {
+
+        /**
+         * Properties of a FutureMessageData.
+         * @memberof proto
+         * @interface IFutureMessageData
+         * @property {proto.IBotData|null} [botData] FutureMessageData botData
+         */
+
+        /**
+         * Constructs a new FutureMessageData.
+         * @memberof proto
+         * @classdesc Represents a FutureMessageData.
+         * @implements IFutureMessageData
+         * @constructor
+         * @param {proto.IFutureMessageData=} [properties] Properties to set
+         */
+        function FutureMessageData(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * FutureMessageData botData.
+         * @member {proto.IBotData|null|undefined} botData
+         * @memberof proto.FutureMessageData
+         * @instance
+         */
+        FutureMessageData.prototype.botData = null;
+
+        /**
+         * Creates a new FutureMessageData instance using the specified properties.
+         * @function create
+         * @memberof proto.FutureMessageData
+         * @static
+         * @param {proto.IFutureMessageData=} [properties] Properties to set
+         * @returns {proto.FutureMessageData} FutureMessageData instance
+         */
+        FutureMessageData.create = function create(properties) {
+            return new FutureMessageData(properties);
+        };
+
+        /**
+         * Encodes the specified FutureMessageData message. Does not implicitly {@link proto.FutureMessageData.verify|verify} messages.
+         * @function encode
+         * @memberof proto.FutureMessageData
+         * @static
+         * @param {proto.IFutureMessageData} message FutureMessageData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        FutureMessageData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.botData != null && Object.hasOwnProperty.call(message, "botData"))
+                $root.proto.BotData.encode(message.botData, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified FutureMessageData message, length delimited. Does not implicitly {@link proto.FutureMessageData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof proto.FutureMessageData
+         * @static
+         * @param {proto.IFutureMessageData} message FutureMessageData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        FutureMessageData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a FutureMessageData message from the specified reader or buffer.
+         * @function decode
+         * @memberof proto.FutureMessageData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {proto.FutureMessageData} FutureMessageData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        FutureMessageData.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.proto.FutureMessageData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.botData = $root.proto.BotData.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a FutureMessageData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof proto.FutureMessageData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {proto.FutureMessageData} FutureMessageData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        FutureMessageData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a FutureMessageData message.
+         * @function verify
+         * @memberof proto.FutureMessageData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        FutureMessageData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.botData != null && message.hasOwnProperty("botData")) {
+                var error = $root.proto.BotData.verify(message.botData);
+                if (error)
+                    return "botData." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a FutureMessageData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof proto.FutureMessageData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {proto.FutureMessageData} FutureMessageData
+         */
+        FutureMessageData.fromObject = function fromObject(object) {
+            if (object instanceof $root.proto.FutureMessageData)
+                return object;
+            var message = new $root.proto.FutureMessageData();
+            if (object.botData != null) {
+                if (typeof object.botData !== "object")
+                    throw TypeError(".proto.FutureMessageData.botData: object expected");
+                message.botData = $root.proto.BotData.fromObject(object.botData);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a FutureMessageData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof proto.FutureMessageData
+         * @static
+         * @param {proto.FutureMessageData} message FutureMessageData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        FutureMessageData.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.botData = null;
+            if (message.botData != null && message.hasOwnProperty("botData"))
+                object.botData = $root.proto.BotData.toObject(message.botData, options);
+            return object;
+        };
+
+        /**
+         * Converts this FutureMessageData to JSON.
+         * @function toJSON
+         * @memberof proto.FutureMessageData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        FutureMessageData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return FutureMessageData;
+    })();
+
+    proto.FutureproofMessageSecretMessage = (function() {
+
+        /**
+         * Properties of a FutureproofMessageSecretMessage.
+         * @memberof proto
+         * @interface IFutureproofMessageSecretMessage
+         * @property {proto.IMessageSecretMessage} messageSecretMessage FutureproofMessageSecretMessage messageSecretMessage
+         * @property {proto.IFutureMessageData} futureMessageData FutureproofMessageSecretMessage futureMessageData
+         */
+
+        /**
+         * Constructs a new FutureproofMessageSecretMessage.
+         * @memberof proto
+         * @classdesc Represents a FutureproofMessageSecretMessage.
+         * @implements IFutureproofMessageSecretMessage
+         * @constructor
+         * @param {proto.IFutureproofMessageSecretMessage=} [properties] Properties to set
+         */
+        function FutureproofMessageSecretMessage(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * FutureproofMessageSecretMessage messageSecretMessage.
+         * @member {proto.IMessageSecretMessage} messageSecretMessage
+         * @memberof proto.FutureproofMessageSecretMessage
+         * @instance
+         */
+        FutureproofMessageSecretMessage.prototype.messageSecretMessage = null;
+
+        /**
+         * FutureproofMessageSecretMessage futureMessageData.
+         * @member {proto.IFutureMessageData} futureMessageData
+         * @memberof proto.FutureproofMessageSecretMessage
+         * @instance
+         */
+        FutureproofMessageSecretMessage.prototype.futureMessageData = null;
+
+        /**
+         * Creates a new FutureproofMessageSecretMessage instance using the specified properties.
+         * @function create
+         * @memberof proto.FutureproofMessageSecretMessage
+         * @static
+         * @param {proto.IFutureproofMessageSecretMessage=} [properties] Properties to set
+         * @returns {proto.FutureproofMessageSecretMessage} FutureproofMessageSecretMessage instance
+         */
+        FutureproofMessageSecretMessage.create = function create(properties) {
+            return new FutureproofMessageSecretMessage(properties);
+        };
+
+        /**
+         * Encodes the specified FutureproofMessageSecretMessage message. Does not implicitly {@link proto.FutureproofMessageSecretMessage.verify|verify} messages.
+         * @function encode
+         * @memberof proto.FutureproofMessageSecretMessage
+         * @static
+         * @param {proto.IFutureproofMessageSecretMessage} message FutureproofMessageSecretMessage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        FutureproofMessageSecretMessage.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            $root.proto.MessageSecretMessage.encode(message.messageSecretMessage, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            $root.proto.FutureMessageData.encode(message.futureMessageData, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified FutureproofMessageSecretMessage message, length delimited. Does not implicitly {@link proto.FutureproofMessageSecretMessage.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof proto.FutureproofMessageSecretMessage
+         * @static
+         * @param {proto.IFutureproofMessageSecretMessage} message FutureproofMessageSecretMessage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        FutureproofMessageSecretMessage.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a FutureproofMessageSecretMessage message from the specified reader or buffer.
+         * @function decode
+         * @memberof proto.FutureproofMessageSecretMessage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {proto.FutureproofMessageSecretMessage} FutureproofMessageSecretMessage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        FutureproofMessageSecretMessage.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.proto.FutureproofMessageSecretMessage();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.messageSecretMessage = $root.proto.MessageSecretMessage.decode(reader, reader.uint32());
+                    break;
+                case 2:
+                    message.futureMessageData = $root.proto.FutureMessageData.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            if (!message.hasOwnProperty("messageSecretMessage"))
+                throw $util.ProtocolError("missing required 'messageSecretMessage'", { instance: message });
+            if (!message.hasOwnProperty("futureMessageData"))
+                throw $util.ProtocolError("missing required 'futureMessageData'", { instance: message });
+            return message;
+        };
+
+        /**
+         * Decodes a FutureproofMessageSecretMessage message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof proto.FutureproofMessageSecretMessage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {proto.FutureproofMessageSecretMessage} FutureproofMessageSecretMessage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        FutureproofMessageSecretMessage.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a FutureproofMessageSecretMessage message.
+         * @function verify
+         * @memberof proto.FutureproofMessageSecretMessage
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        FutureproofMessageSecretMessage.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            {
+                var error = $root.proto.MessageSecretMessage.verify(message.messageSecretMessage);
+                if (error)
+                    return "messageSecretMessage." + error;
+            }
+            {
+                var error = $root.proto.FutureMessageData.verify(message.futureMessageData);
+                if (error)
+                    return "futureMessageData." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a FutureproofMessageSecretMessage message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof proto.FutureproofMessageSecretMessage
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {proto.FutureproofMessageSecretMessage} FutureproofMessageSecretMessage
+         */
+        FutureproofMessageSecretMessage.fromObject = function fromObject(object) {
+            if (object instanceof $root.proto.FutureproofMessageSecretMessage)
+                return object;
+            var message = new $root.proto.FutureproofMessageSecretMessage();
+            if (object.messageSecretMessage != null) {
+                if (typeof object.messageSecretMessage !== "object")
+                    throw TypeError(".proto.FutureproofMessageSecretMessage.messageSecretMessage: object expected");
+                message.messageSecretMessage = $root.proto.MessageSecretMessage.fromObject(object.messageSecretMessage);
+            }
+            if (object.futureMessageData != null) {
+                if (typeof object.futureMessageData !== "object")
+                    throw TypeError(".proto.FutureproofMessageSecretMessage.futureMessageData: object expected");
+                message.futureMessageData = $root.proto.FutureMessageData.fromObject(object.futureMessageData);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a FutureproofMessageSecretMessage message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof proto.FutureproofMessageSecretMessage
+         * @static
+         * @param {proto.FutureproofMessageSecretMessage} message FutureproofMessageSecretMessage
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        FutureproofMessageSecretMessage.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.messageSecretMessage = null;
+                object.futureMessageData = null;
+            }
+            if (message.messageSecretMessage != null && message.hasOwnProperty("messageSecretMessage"))
+                object.messageSecretMessage = $root.proto.MessageSecretMessage.toObject(message.messageSecretMessage, options);
+            if (message.futureMessageData != null && message.hasOwnProperty("futureMessageData"))
+                object.futureMessageData = $root.proto.FutureMessageData.toObject(message.futureMessageData, options);
+            return object;
+        };
+
+        /**
+         * Converts this FutureproofMessageSecretMessage to JSON.
+         * @function toJSON
+         * @memberof proto.FutureproofMessageSecretMessage
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        FutureproofMessageSecretMessage.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return FutureproofMessageSecretMessage;
     })();
 
     proto.GlobalSettings = (function() {
@@ -20979,6 +22398,7 @@ $root.proto = (function() {
          * @property {proto.Message.IPollCreationMessage|null} [pollCreationMessageV3] Message pollCreationMessageV3
          * @property {proto.Message.IScheduledCallEditMessage|null} [scheduledCallEditMessage] Message scheduledCallEditMessage
          * @property {proto.Message.IVideoMessage|null} [ptvMessage] Message ptvMessage
+         * @property {proto.Message.IFutureProofMessage|null} [botInvokeMessage] Message botInvokeMessage
          */
 
         /**
@@ -21445,6 +22865,14 @@ $root.proto = (function() {
         Message.prototype.ptvMessage = null;
 
         /**
+         * Message botInvokeMessage.
+         * @member {proto.Message.IFutureProofMessage|null|undefined} botInvokeMessage
+         * @memberof proto.Message
+         * @instance
+         */
+        Message.prototype.botInvokeMessage = null;
+
+        /**
          * Creates a new Message instance using the specified properties.
          * @function create
          * @memberof proto.Message
@@ -21580,6 +23008,8 @@ $root.proto = (function() {
                 $root.proto.Message.ScheduledCallEditMessage.encode(message.scheduledCallEditMessage, writer.uint32(/* id 65, wireType 2 =*/522).fork()).ldelim();
             if (message.ptvMessage != null && Object.hasOwnProperty.call(message, "ptvMessage"))
                 $root.proto.Message.VideoMessage.encode(message.ptvMessage, writer.uint32(/* id 66, wireType 2 =*/530).fork()).ldelim();
+            if (message.botInvokeMessage != null && Object.hasOwnProperty.call(message, "botInvokeMessage"))
+                $root.proto.Message.FutureProofMessage.encode(message.botInvokeMessage, writer.uint32(/* id 67, wireType 2 =*/538).fork()).ldelim();
             return writer;
         };
 
@@ -21781,6 +23211,9 @@ $root.proto = (function() {
                     break;
                 case 66:
                     message.ptvMessage = $root.proto.Message.VideoMessage.decode(reader, reader.uint32());
+                    break;
+                case 67:
+                    message.botInvokeMessage = $root.proto.Message.FutureProofMessage.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -22095,6 +23528,11 @@ $root.proto = (function() {
                 if (error)
                     return "ptvMessage." + error;
             }
+            if (message.botInvokeMessage != null && message.hasOwnProperty("botInvokeMessage")) {
+                var error = $root.proto.Message.FutureProofMessage.verify(message.botInvokeMessage);
+                if (error)
+                    return "botInvokeMessage." + error;
+            }
             return null;
         };
 
@@ -22387,6 +23825,11 @@ $root.proto = (function() {
                     throw TypeError(".proto.Message.ptvMessage: object expected");
                 message.ptvMessage = $root.proto.Message.VideoMessage.fromObject(object.ptvMessage);
             }
+            if (object.botInvokeMessage != null) {
+                if (typeof object.botInvokeMessage !== "object")
+                    throw TypeError(".proto.Message.botInvokeMessage: object expected");
+                message.botInvokeMessage = $root.proto.Message.FutureProofMessage.fromObject(object.botInvokeMessage);
+            }
             return message;
         };
 
@@ -22460,6 +23903,7 @@ $root.proto = (function() {
                 object.pollCreationMessageV3 = null;
                 object.scheduledCallEditMessage = null;
                 object.ptvMessage = null;
+                object.botInvokeMessage = null;
             }
             if (message.conversation != null && message.hasOwnProperty("conversation"))
                 object.conversation = message.conversation;
@@ -22573,6 +24017,8 @@ $root.proto = (function() {
                 object.scheduledCallEditMessage = $root.proto.Message.ScheduledCallEditMessage.toObject(message.scheduledCallEditMessage, options);
             if (message.ptvMessage != null && message.hasOwnProperty("ptvMessage"))
                 object.ptvMessage = $root.proto.Message.VideoMessage.toObject(message.ptvMessage, options);
+            if (message.botInvokeMessage != null && message.hasOwnProperty("botInvokeMessage"))
+                object.botInvokeMessage = $root.proto.Message.FutureProofMessage.toObject(message.botInvokeMessage, options);
             return object;
         };
 
@@ -24748,6 +26194,305 @@ $root.proto = (function() {
             };
 
             return AudioMessage;
+        })();
+
+        Message.BotFeedbackMessage = (function() {
+
+            /**
+             * Properties of a BotFeedbackMessage.
+             * @memberof proto.Message
+             * @interface IBotFeedbackMessage
+             * @property {proto.IMessageKey|null} [messageKey] BotFeedbackMessage messageKey
+             * @property {proto.Message.BotFeedbackMessage.BotFeedbackKind|null} [kind] BotFeedbackMessage kind
+             * @property {string|null} [text] BotFeedbackMessage text
+             */
+
+            /**
+             * Constructs a new BotFeedbackMessage.
+             * @memberof proto.Message
+             * @classdesc Represents a BotFeedbackMessage.
+             * @implements IBotFeedbackMessage
+             * @constructor
+             * @param {proto.Message.IBotFeedbackMessage=} [properties] Properties to set
+             */
+            function BotFeedbackMessage(properties) {
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * BotFeedbackMessage messageKey.
+             * @member {proto.IMessageKey|null|undefined} messageKey
+             * @memberof proto.Message.BotFeedbackMessage
+             * @instance
+             */
+            BotFeedbackMessage.prototype.messageKey = null;
+
+            /**
+             * BotFeedbackMessage kind.
+             * @member {proto.Message.BotFeedbackMessage.BotFeedbackKind} kind
+             * @memberof proto.Message.BotFeedbackMessage
+             * @instance
+             */
+            BotFeedbackMessage.prototype.kind = 0;
+
+            /**
+             * BotFeedbackMessage text.
+             * @member {string} text
+             * @memberof proto.Message.BotFeedbackMessage
+             * @instance
+             */
+            BotFeedbackMessage.prototype.text = "";
+
+            /**
+             * Creates a new BotFeedbackMessage instance using the specified properties.
+             * @function create
+             * @memberof proto.Message.BotFeedbackMessage
+             * @static
+             * @param {proto.Message.IBotFeedbackMessage=} [properties] Properties to set
+             * @returns {proto.Message.BotFeedbackMessage} BotFeedbackMessage instance
+             */
+            BotFeedbackMessage.create = function create(properties) {
+                return new BotFeedbackMessage(properties);
+            };
+
+            /**
+             * Encodes the specified BotFeedbackMessage message. Does not implicitly {@link proto.Message.BotFeedbackMessage.verify|verify} messages.
+             * @function encode
+             * @memberof proto.Message.BotFeedbackMessage
+             * @static
+             * @param {proto.Message.IBotFeedbackMessage} message BotFeedbackMessage message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            BotFeedbackMessage.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.messageKey != null && Object.hasOwnProperty.call(message, "messageKey"))
+                    $root.proto.MessageKey.encode(message.messageKey, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+                if (message.kind != null && Object.hasOwnProperty.call(message, "kind"))
+                    writer.uint32(/* id 2, wireType 0 =*/16).int32(message.kind);
+                if (message.text != null && Object.hasOwnProperty.call(message, "text"))
+                    writer.uint32(/* id 3, wireType 2 =*/26).string(message.text);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified BotFeedbackMessage message, length delimited. Does not implicitly {@link proto.Message.BotFeedbackMessage.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof proto.Message.BotFeedbackMessage
+             * @static
+             * @param {proto.Message.IBotFeedbackMessage} message BotFeedbackMessage message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            BotFeedbackMessage.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a BotFeedbackMessage message from the specified reader or buffer.
+             * @function decode
+             * @memberof proto.Message.BotFeedbackMessage
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {proto.Message.BotFeedbackMessage} BotFeedbackMessage
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            BotFeedbackMessage.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.proto.Message.BotFeedbackMessage();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.messageKey = $root.proto.MessageKey.decode(reader, reader.uint32());
+                        break;
+                    case 2:
+                        message.kind = reader.int32();
+                        break;
+                    case 3:
+                        message.text = reader.string();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a BotFeedbackMessage message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof proto.Message.BotFeedbackMessage
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {proto.Message.BotFeedbackMessage} BotFeedbackMessage
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            BotFeedbackMessage.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a BotFeedbackMessage message.
+             * @function verify
+             * @memberof proto.Message.BotFeedbackMessage
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            BotFeedbackMessage.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.messageKey != null && message.hasOwnProperty("messageKey")) {
+                    var error = $root.proto.MessageKey.verify(message.messageKey);
+                    if (error)
+                        return "messageKey." + error;
+                }
+                if (message.kind != null && message.hasOwnProperty("kind"))
+                    switch (message.kind) {
+                    default:
+                        return "kind: enum value expected";
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                        break;
+                    }
+                if (message.text != null && message.hasOwnProperty("text"))
+                    if (!$util.isString(message.text))
+                        return "text: string expected";
+                return null;
+            };
+
+            /**
+             * Creates a BotFeedbackMessage message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof proto.Message.BotFeedbackMessage
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {proto.Message.BotFeedbackMessage} BotFeedbackMessage
+             */
+            BotFeedbackMessage.fromObject = function fromObject(object) {
+                if (object instanceof $root.proto.Message.BotFeedbackMessage)
+                    return object;
+                var message = new $root.proto.Message.BotFeedbackMessage();
+                if (object.messageKey != null) {
+                    if (typeof object.messageKey !== "object")
+                        throw TypeError(".proto.Message.BotFeedbackMessage.messageKey: object expected");
+                    message.messageKey = $root.proto.MessageKey.fromObject(object.messageKey);
+                }
+                switch (object.kind) {
+                case "BOT_FEEDBACK_POSITIVE":
+                case 0:
+                    message.kind = 0;
+                    break;
+                case "BOT_FEEDBACK_NEGATIVE_GENERIC":
+                case 1:
+                    message.kind = 1;
+                    break;
+                case "BOT_FEEDBACK_NEGATIVE_HELPFUL":
+                case 2:
+                    message.kind = 2;
+                    break;
+                case "BOT_FEEDBACK_NEGATIVE_INTERESTING":
+                case 3:
+                    message.kind = 3;
+                    break;
+                case "BOT_FEEDBACK_NEGATIVE_ACCURATE":
+                case 4:
+                    message.kind = 4;
+                    break;
+                case "BOT_FEEDBACK_NEGATIVE_SAFE":
+                case 5:
+                    message.kind = 5;
+                    break;
+                case "BOT_FEEDBACK_NEGATIVE_OTHER":
+                case 6:
+                    message.kind = 6;
+                    break;
+                }
+                if (object.text != null)
+                    message.text = String(object.text);
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a BotFeedbackMessage message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof proto.Message.BotFeedbackMessage
+             * @static
+             * @param {proto.Message.BotFeedbackMessage} message BotFeedbackMessage
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            BotFeedbackMessage.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.defaults) {
+                    object.messageKey = null;
+                    object.kind = options.enums === String ? "BOT_FEEDBACK_POSITIVE" : 0;
+                    object.text = "";
+                }
+                if (message.messageKey != null && message.hasOwnProperty("messageKey"))
+                    object.messageKey = $root.proto.MessageKey.toObject(message.messageKey, options);
+                if (message.kind != null && message.hasOwnProperty("kind"))
+                    object.kind = options.enums === String ? $root.proto.Message.BotFeedbackMessage.BotFeedbackKind[message.kind] : message.kind;
+                if (message.text != null && message.hasOwnProperty("text"))
+                    object.text = message.text;
+                return object;
+            };
+
+            /**
+             * Converts this BotFeedbackMessage to JSON.
+             * @function toJSON
+             * @memberof proto.Message.BotFeedbackMessage
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            BotFeedbackMessage.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            /**
+             * BotFeedbackKind enum.
+             * @name proto.Message.BotFeedbackMessage.BotFeedbackKind
+             * @enum {number}
+             * @property {number} BOT_FEEDBACK_POSITIVE=0 BOT_FEEDBACK_POSITIVE value
+             * @property {number} BOT_FEEDBACK_NEGATIVE_GENERIC=1 BOT_FEEDBACK_NEGATIVE_GENERIC value
+             * @property {number} BOT_FEEDBACK_NEGATIVE_HELPFUL=2 BOT_FEEDBACK_NEGATIVE_HELPFUL value
+             * @property {number} BOT_FEEDBACK_NEGATIVE_INTERESTING=3 BOT_FEEDBACK_NEGATIVE_INTERESTING value
+             * @property {number} BOT_FEEDBACK_NEGATIVE_ACCURATE=4 BOT_FEEDBACK_NEGATIVE_ACCURATE value
+             * @property {number} BOT_FEEDBACK_NEGATIVE_SAFE=5 BOT_FEEDBACK_NEGATIVE_SAFE value
+             * @property {number} BOT_FEEDBACK_NEGATIVE_OTHER=6 BOT_FEEDBACK_NEGATIVE_OTHER value
+             */
+            BotFeedbackMessage.BotFeedbackKind = (function() {
+                var valuesById = {}, values = Object.create(valuesById);
+                values[valuesById[0] = "BOT_FEEDBACK_POSITIVE"] = 0;
+                values[valuesById[1] = "BOT_FEEDBACK_NEGATIVE_GENERIC"] = 1;
+                values[valuesById[2] = "BOT_FEEDBACK_NEGATIVE_HELPFUL"] = 2;
+                values[valuesById[3] = "BOT_FEEDBACK_NEGATIVE_INTERESTING"] = 3;
+                values[valuesById[4] = "BOT_FEEDBACK_NEGATIVE_ACCURATE"] = 4;
+                values[valuesById[5] = "BOT_FEEDBACK_NEGATIVE_SAFE"] = 5;
+                values[valuesById[6] = "BOT_FEEDBACK_NEGATIVE_OTHER"] = 6;
+                return values;
+            })();
+
+            return BotFeedbackMessage;
         })();
 
         Message.ButtonsMessage = (function() {
@@ -33783,6 +35528,7 @@ $root.proto = (function() {
              * @property {proto.Message.InteractiveMessage.IShopMessage|null} [shopStorefrontMessage] InteractiveMessage shopStorefrontMessage
              * @property {proto.Message.InteractiveMessage.ICollectionMessage|null} [collectionMessage] InteractiveMessage collectionMessage
              * @property {proto.Message.InteractiveMessage.INativeFlowMessage|null} [nativeFlowMessage] InteractiveMessage nativeFlowMessage
+             * @property {proto.Message.InteractiveMessage.ICarouselMessage|null} [carouselMessage] InteractiveMessage carouselMessage
              */
 
             /**
@@ -33856,17 +35602,25 @@ $root.proto = (function() {
              */
             InteractiveMessage.prototype.nativeFlowMessage = null;
 
+            /**
+             * InteractiveMessage carouselMessage.
+             * @member {proto.Message.InteractiveMessage.ICarouselMessage|null|undefined} carouselMessage
+             * @memberof proto.Message.InteractiveMessage
+             * @instance
+             */
+            InteractiveMessage.prototype.carouselMessage = null;
+
             // OneOf field names bound to virtual getters and setters
             var $oneOfFields;
 
             /**
              * InteractiveMessage interactiveMessage.
-             * @member {"shopStorefrontMessage"|"collectionMessage"|"nativeFlowMessage"|undefined} interactiveMessage
+             * @member {"shopStorefrontMessage"|"collectionMessage"|"nativeFlowMessage"|"carouselMessage"|undefined} interactiveMessage
              * @memberof proto.Message.InteractiveMessage
              * @instance
              */
             Object.defineProperty(InteractiveMessage.prototype, "interactiveMessage", {
-                get: $util.oneOfGetter($oneOfFields = ["shopStorefrontMessage", "collectionMessage", "nativeFlowMessage"]),
+                get: $util.oneOfGetter($oneOfFields = ["shopStorefrontMessage", "collectionMessage", "nativeFlowMessage", "carouselMessage"]),
                 set: $util.oneOfSetter($oneOfFields)
             });
 
@@ -33906,6 +35660,8 @@ $root.proto = (function() {
                     $root.proto.Message.InteractiveMessage.CollectionMessage.encode(message.collectionMessage, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
                 if (message.nativeFlowMessage != null && Object.hasOwnProperty.call(message, "nativeFlowMessage"))
                     $root.proto.Message.InteractiveMessage.NativeFlowMessage.encode(message.nativeFlowMessage, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
+                if (message.carouselMessage != null && Object.hasOwnProperty.call(message, "carouselMessage"))
+                    $root.proto.Message.InteractiveMessage.CarouselMessage.encode(message.carouselMessage, writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
                 if (message.contextInfo != null && Object.hasOwnProperty.call(message, "contextInfo"))
                     $root.proto.ContextInfo.encode(message.contextInfo, writer.uint32(/* id 15, wireType 2 =*/122).fork()).ldelim();
                 return writer;
@@ -33962,6 +35718,9 @@ $root.proto = (function() {
                         break;
                     case 6:
                         message.nativeFlowMessage = $root.proto.Message.InteractiveMessage.NativeFlowMessage.decode(reader, reader.uint32());
+                        break;
+                    case 7:
+                        message.carouselMessage = $root.proto.Message.InteractiveMessage.CarouselMessage.decode(reader, reader.uint32());
                         break;
                     default:
                         reader.skipType(tag & 7);
@@ -34047,6 +35806,16 @@ $root.proto = (function() {
                             return "nativeFlowMessage." + error;
                     }
                 }
+                if (message.carouselMessage != null && message.hasOwnProperty("carouselMessage")) {
+                    if (properties.interactiveMessage === 1)
+                        return "interactiveMessage: multiple values";
+                    properties.interactiveMessage = 1;
+                    {
+                        var error = $root.proto.Message.InteractiveMessage.CarouselMessage.verify(message.carouselMessage);
+                        if (error)
+                            return "carouselMessage." + error;
+                    }
+                }
                 return null;
             };
 
@@ -34097,6 +35866,11 @@ $root.proto = (function() {
                         throw TypeError(".proto.Message.InteractiveMessage.nativeFlowMessage: object expected");
                     message.nativeFlowMessage = $root.proto.Message.InteractiveMessage.NativeFlowMessage.fromObject(object.nativeFlowMessage);
                 }
+                if (object.carouselMessage != null) {
+                    if (typeof object.carouselMessage !== "object")
+                        throw TypeError(".proto.Message.InteractiveMessage.carouselMessage: object expected");
+                    message.carouselMessage = $root.proto.Message.InteractiveMessage.CarouselMessage.fromObject(object.carouselMessage);
+                }
                 return message;
             };
 
@@ -34139,6 +35913,11 @@ $root.proto = (function() {
                     object.nativeFlowMessage = $root.proto.Message.InteractiveMessage.NativeFlowMessage.toObject(message.nativeFlowMessage, options);
                     if (options.oneofs)
                         object.interactiveMessage = "nativeFlowMessage";
+                }
+                if (message.carouselMessage != null && message.hasOwnProperty("carouselMessage")) {
+                    object.carouselMessage = $root.proto.Message.InteractiveMessage.CarouselMessage.toObject(message.carouselMessage, options);
+                    if (options.oneofs)
+                        object.interactiveMessage = "carouselMessage";
                 }
                 if (message.contextInfo != null && message.hasOwnProperty("contextInfo"))
                     object.contextInfo = $root.proto.ContextInfo.toObject(message.contextInfo, options);
@@ -34341,6 +36120,214 @@ $root.proto = (function() {
                 };
 
                 return Body;
+            })();
+
+            InteractiveMessage.CarouselMessage = (function() {
+
+                /**
+                 * Properties of a CarouselMessage.
+                 * @memberof proto.Message.InteractiveMessage
+                 * @interface ICarouselMessage
+                 * @property {Array.<proto.Message.IInteractiveMessage>|null} [cards] CarouselMessage cards
+                 */
+
+                /**
+                 * Constructs a new CarouselMessage.
+                 * @memberof proto.Message.InteractiveMessage
+                 * @classdesc Represents a CarouselMessage.
+                 * @implements ICarouselMessage
+                 * @constructor
+                 * @param {proto.Message.InteractiveMessage.ICarouselMessage=} [properties] Properties to set
+                 */
+                function CarouselMessage(properties) {
+                    this.cards = [];
+                    if (properties)
+                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            if (properties[keys[i]] != null)
+                                this[keys[i]] = properties[keys[i]];
+                }
+
+                /**
+                 * CarouselMessage cards.
+                 * @member {Array.<proto.Message.IInteractiveMessage>} cards
+                 * @memberof proto.Message.InteractiveMessage.CarouselMessage
+                 * @instance
+                 */
+                CarouselMessage.prototype.cards = $util.emptyArray;
+
+                /**
+                 * Creates a new CarouselMessage instance using the specified properties.
+                 * @function create
+                 * @memberof proto.Message.InteractiveMessage.CarouselMessage
+                 * @static
+                 * @param {proto.Message.InteractiveMessage.ICarouselMessage=} [properties] Properties to set
+                 * @returns {proto.Message.InteractiveMessage.CarouselMessage} CarouselMessage instance
+                 */
+                CarouselMessage.create = function create(properties) {
+                    return new CarouselMessage(properties);
+                };
+
+                /**
+                 * Encodes the specified CarouselMessage message. Does not implicitly {@link proto.Message.InteractiveMessage.CarouselMessage.verify|verify} messages.
+                 * @function encode
+                 * @memberof proto.Message.InteractiveMessage.CarouselMessage
+                 * @static
+                 * @param {proto.Message.InteractiveMessage.ICarouselMessage} message CarouselMessage message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                CarouselMessage.encode = function encode(message, writer) {
+                    if (!writer)
+                        writer = $Writer.create();
+                    if (message.cards != null && message.cards.length)
+                        for (var i = 0; i < message.cards.length; ++i)
+                            $root.proto.Message.InteractiveMessage.encode(message.cards[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+                    return writer;
+                };
+
+                /**
+                 * Encodes the specified CarouselMessage message, length delimited. Does not implicitly {@link proto.Message.InteractiveMessage.CarouselMessage.verify|verify} messages.
+                 * @function encodeDelimited
+                 * @memberof proto.Message.InteractiveMessage.CarouselMessage
+                 * @static
+                 * @param {proto.Message.InteractiveMessage.ICarouselMessage} message CarouselMessage message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                CarouselMessage.encodeDelimited = function encodeDelimited(message, writer) {
+                    return this.encode(message, writer).ldelim();
+                };
+
+                /**
+                 * Decodes a CarouselMessage message from the specified reader or buffer.
+                 * @function decode
+                 * @memberof proto.Message.InteractiveMessage.CarouselMessage
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @param {number} [length] Message length if known beforehand
+                 * @returns {proto.Message.InteractiveMessage.CarouselMessage} CarouselMessage
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                CarouselMessage.decode = function decode(reader, length) {
+                    if (!(reader instanceof $Reader))
+                        reader = $Reader.create(reader);
+                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.proto.Message.InteractiveMessage.CarouselMessage();
+                    while (reader.pos < end) {
+                        var tag = reader.uint32();
+                        switch (tag >>> 3) {
+                        case 1:
+                            if (!(message.cards && message.cards.length))
+                                message.cards = [];
+                            message.cards.push($root.proto.Message.InteractiveMessage.decode(reader, reader.uint32()));
+                            break;
+                        default:
+                            reader.skipType(tag & 7);
+                            break;
+                        }
+                    }
+                    return message;
+                };
+
+                /**
+                 * Decodes a CarouselMessage message from the specified reader or buffer, length delimited.
+                 * @function decodeDelimited
+                 * @memberof proto.Message.InteractiveMessage.CarouselMessage
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @returns {proto.Message.InteractiveMessage.CarouselMessage} CarouselMessage
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                CarouselMessage.decodeDelimited = function decodeDelimited(reader) {
+                    if (!(reader instanceof $Reader))
+                        reader = new $Reader(reader);
+                    return this.decode(reader, reader.uint32());
+                };
+
+                /**
+                 * Verifies a CarouselMessage message.
+                 * @function verify
+                 * @memberof proto.Message.InteractiveMessage.CarouselMessage
+                 * @static
+                 * @param {Object.<string,*>} message Plain object to verify
+                 * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                 */
+                CarouselMessage.verify = function verify(message) {
+                    if (typeof message !== "object" || message === null)
+                        return "object expected";
+                    if (message.cards != null && message.hasOwnProperty("cards")) {
+                        if (!Array.isArray(message.cards))
+                            return "cards: array expected";
+                        for (var i = 0; i < message.cards.length; ++i) {
+                            var error = $root.proto.Message.InteractiveMessage.verify(message.cards[i]);
+                            if (error)
+                                return "cards." + error;
+                        }
+                    }
+                    return null;
+                };
+
+                /**
+                 * Creates a CarouselMessage message from a plain object. Also converts values to their respective internal types.
+                 * @function fromObject
+                 * @memberof proto.Message.InteractiveMessage.CarouselMessage
+                 * @static
+                 * @param {Object.<string,*>} object Plain object
+                 * @returns {proto.Message.InteractiveMessage.CarouselMessage} CarouselMessage
+                 */
+                CarouselMessage.fromObject = function fromObject(object) {
+                    if (object instanceof $root.proto.Message.InteractiveMessage.CarouselMessage)
+                        return object;
+                    var message = new $root.proto.Message.InteractiveMessage.CarouselMessage();
+                    if (object.cards) {
+                        if (!Array.isArray(object.cards))
+                            throw TypeError(".proto.Message.InteractiveMessage.CarouselMessage.cards: array expected");
+                        message.cards = [];
+                        for (var i = 0; i < object.cards.length; ++i) {
+                            if (typeof object.cards[i] !== "object")
+                                throw TypeError(".proto.Message.InteractiveMessage.CarouselMessage.cards: object expected");
+                            message.cards[i] = $root.proto.Message.InteractiveMessage.fromObject(object.cards[i]);
+                        }
+                    }
+                    return message;
+                };
+
+                /**
+                 * Creates a plain object from a CarouselMessage message. Also converts values to other types if specified.
+                 * @function toObject
+                 * @memberof proto.Message.InteractiveMessage.CarouselMessage
+                 * @static
+                 * @param {proto.Message.InteractiveMessage.CarouselMessage} message CarouselMessage
+                 * @param {$protobuf.IConversionOptions} [options] Conversion options
+                 * @returns {Object.<string,*>} Plain object
+                 */
+                CarouselMessage.toObject = function toObject(message, options) {
+                    if (!options)
+                        options = {};
+                    var object = {};
+                    if (options.arrays || options.defaults)
+                        object.cards = [];
+                    if (message.cards && message.cards.length) {
+                        object.cards = [];
+                        for (var j = 0; j < message.cards.length; ++j)
+                            object.cards[j] = $root.proto.Message.InteractiveMessage.toObject(message.cards[j], options);
+                    }
+                    return object;
+                };
+
+                /**
+                 * Converts this CarouselMessage to JSON.
+                 * @function toJSON
+                 * @memberof proto.Message.InteractiveMessage.CarouselMessage
+                 * @instance
+                 * @returns {Object.<string,*>} JSON object
+                 */
+                CarouselMessage.prototype.toJSON = function toJSON() {
+                    return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                };
+
+                return CarouselMessage;
             })();
 
             InteractiveMessage.CollectionMessage = (function() {
@@ -46684,6 +48671,7 @@ $root.proto = (function() {
              * @property {number|Long|null} [timestampMs] ProtocolMessage timestampMs
              * @property {proto.Message.IPeerDataOperationRequestMessage|null} [peerDataOperationRequestMessage] ProtocolMessage peerDataOperationRequestMessage
              * @property {proto.Message.IPeerDataOperationRequestResponseMessage|null} [peerDataOperationRequestResponseMessage] ProtocolMessage peerDataOperationRequestResponseMessage
+             * @property {proto.Message.IBotFeedbackMessage|null} [botFeedbackMessage] ProtocolMessage botFeedbackMessage
              */
 
             /**
@@ -46814,6 +48802,14 @@ $root.proto = (function() {
             ProtocolMessage.prototype.peerDataOperationRequestResponseMessage = null;
 
             /**
+             * ProtocolMessage botFeedbackMessage.
+             * @member {proto.Message.IBotFeedbackMessage|null|undefined} botFeedbackMessage
+             * @memberof proto.Message.ProtocolMessage
+             * @instance
+             */
+            ProtocolMessage.prototype.botFeedbackMessage = null;
+
+            /**
              * Creates a new ProtocolMessage instance using the specified properties.
              * @function create
              * @memberof proto.Message.ProtocolMessage
@@ -46865,6 +48861,8 @@ $root.proto = (function() {
                     $root.proto.Message.PeerDataOperationRequestMessage.encode(message.peerDataOperationRequestMessage, writer.uint32(/* id 16, wireType 2 =*/130).fork()).ldelim();
                 if (message.peerDataOperationRequestResponseMessage != null && Object.hasOwnProperty.call(message, "peerDataOperationRequestResponseMessage"))
                     $root.proto.Message.PeerDataOperationRequestResponseMessage.encode(message.peerDataOperationRequestResponseMessage, writer.uint32(/* id 17, wireType 2 =*/138).fork()).ldelim();
+                if (message.botFeedbackMessage != null && Object.hasOwnProperty.call(message, "botFeedbackMessage"))
+                    $root.proto.Message.BotFeedbackMessage.encode(message.botFeedbackMessage, writer.uint32(/* id 18, wireType 2 =*/146).fork()).ldelim();
                 return writer;
             };
 
@@ -46941,6 +48939,9 @@ $root.proto = (function() {
                     case 17:
                         message.peerDataOperationRequestResponseMessage = $root.proto.Message.PeerDataOperationRequestResponseMessage.decode(reader, reader.uint32());
                         break;
+                    case 18:
+                        message.botFeedbackMessage = $root.proto.Message.BotFeedbackMessage.decode(reader, reader.uint32());
+                        break;
                     default:
                         reader.skipType(tag & 7);
                         break;
@@ -46998,6 +48999,8 @@ $root.proto = (function() {
                     case 14:
                     case 16:
                     case 17:
+                    case 18:
+                    case 19:
                         break;
                     }
                 if (message.ephemeralExpiration != null && message.hasOwnProperty("ephemeralExpiration"))
@@ -47053,6 +49056,11 @@ $root.proto = (function() {
                     var error = $root.proto.Message.PeerDataOperationRequestResponseMessage.verify(message.peerDataOperationRequestResponseMessage);
                     if (error)
                         return "peerDataOperationRequestResponseMessage." + error;
+                }
+                if (message.botFeedbackMessage != null && message.hasOwnProperty("botFeedbackMessage")) {
+                    var error = $root.proto.Message.BotFeedbackMessage.verify(message.botFeedbackMessage);
+                    if (error)
+                        return "botFeedbackMessage." + error;
                 }
                 return null;
             };
@@ -47127,6 +49135,14 @@ $root.proto = (function() {
                 case 17:
                     message.type = 17;
                     break;
+                case "REQUEST_WELCOME_MESSAGE":
+                case 18:
+                    message.type = 18;
+                    break;
+                case "BOT_FEEDBACK_MESSAGE":
+                case 19:
+                    message.type = 19;
+                    break;
                 }
                 if (object.ephemeralExpiration != null)
                     message.ephemeralExpiration = object.ephemeralExpiration >>> 0;
@@ -47193,6 +49209,11 @@ $root.proto = (function() {
                         throw TypeError(".proto.Message.ProtocolMessage.peerDataOperationRequestResponseMessage: object expected");
                     message.peerDataOperationRequestResponseMessage = $root.proto.Message.PeerDataOperationRequestResponseMessage.fromObject(object.peerDataOperationRequestResponseMessage);
                 }
+                if (object.botFeedbackMessage != null) {
+                    if (typeof object.botFeedbackMessage !== "object")
+                        throw TypeError(".proto.Message.ProtocolMessage.botFeedbackMessage: object expected");
+                    message.botFeedbackMessage = $root.proto.Message.BotFeedbackMessage.fromObject(object.botFeedbackMessage);
+                }
                 return message;
             };
 
@@ -47232,6 +49253,7 @@ $root.proto = (function() {
                         object.timestampMs = options.longs === String ? "0" : 0;
                     object.peerDataOperationRequestMessage = null;
                     object.peerDataOperationRequestResponseMessage = null;
+                    object.botFeedbackMessage = null;
                 }
                 if (message.key != null && message.hasOwnProperty("key"))
                     object.key = $root.proto.MessageKey.toObject(message.key, options);
@@ -47267,6 +49289,8 @@ $root.proto = (function() {
                     object.peerDataOperationRequestMessage = $root.proto.Message.PeerDataOperationRequestMessage.toObject(message.peerDataOperationRequestMessage, options);
                 if (message.peerDataOperationRequestResponseMessage != null && message.hasOwnProperty("peerDataOperationRequestResponseMessage"))
                     object.peerDataOperationRequestResponseMessage = $root.proto.Message.PeerDataOperationRequestResponseMessage.toObject(message.peerDataOperationRequestResponseMessage, options);
+                if (message.botFeedbackMessage != null && message.hasOwnProperty("botFeedbackMessage"))
+                    object.botFeedbackMessage = $root.proto.Message.BotFeedbackMessage.toObject(message.botFeedbackMessage, options);
                 return object;
             };
 
@@ -47298,6 +49322,8 @@ $root.proto = (function() {
              * @property {number} MESSAGE_EDIT=14 MESSAGE_EDIT value
              * @property {number} PEER_DATA_OPERATION_REQUEST_MESSAGE=16 PEER_DATA_OPERATION_REQUEST_MESSAGE value
              * @property {number} PEER_DATA_OPERATION_REQUEST_RESPONSE_MESSAGE=17 PEER_DATA_OPERATION_REQUEST_RESPONSE_MESSAGE value
+             * @property {number} REQUEST_WELCOME_MESSAGE=18 REQUEST_WELCOME_MESSAGE value
+             * @property {number} BOT_FEEDBACK_MESSAGE=19 BOT_FEEDBACK_MESSAGE value
              */
             ProtocolMessage.Type = (function() {
                 var valuesById = {}, values = Object.create(valuesById);
@@ -47314,6 +49340,8 @@ $root.proto = (function() {
                 values[valuesById[14] = "MESSAGE_EDIT"] = 14;
                 values[valuesById[16] = "PEER_DATA_OPERATION_REQUEST_MESSAGE"] = 16;
                 values[valuesById[17] = "PEER_DATA_OPERATION_REQUEST_RESPONSE_MESSAGE"] = 17;
+                values[valuesById[18] = "REQUEST_WELCOME_MESSAGE"] = 18;
+                values[valuesById[19] = "BOT_FEEDBACK_MESSAGE"] = 19;
                 return values;
             })();
 
@@ -52572,6 +54600,8 @@ $root.proto = (function() {
          * @property {Uint8Array|null} [messageSecret] MessageContextInfo messageSecret
          * @property {Uint8Array|null} [paddingBytes] MessageContextInfo paddingBytes
          * @property {number|null} [messageAddOnDurationInSecs] MessageContextInfo messageAddOnDurationInSecs
+         * @property {Uint8Array|null} [botMessageSecret] MessageContextInfo botMessageSecret
+         * @property {proto.IBotMetadata|null} [botMetadata] MessageContextInfo botMetadata
          */
 
         /**
@@ -52630,6 +54660,22 @@ $root.proto = (function() {
         MessageContextInfo.prototype.messageAddOnDurationInSecs = 0;
 
         /**
+         * MessageContextInfo botMessageSecret.
+         * @member {Uint8Array} botMessageSecret
+         * @memberof proto.MessageContextInfo
+         * @instance
+         */
+        MessageContextInfo.prototype.botMessageSecret = $util.newBuffer([]);
+
+        /**
+         * MessageContextInfo botMetadata.
+         * @member {proto.IBotMetadata|null|undefined} botMetadata
+         * @memberof proto.MessageContextInfo
+         * @instance
+         */
+        MessageContextInfo.prototype.botMetadata = null;
+
+        /**
          * Creates a new MessageContextInfo instance using the specified properties.
          * @function create
          * @memberof proto.MessageContextInfo
@@ -52663,6 +54709,10 @@ $root.proto = (function() {
                 writer.uint32(/* id 4, wireType 2 =*/34).bytes(message.paddingBytes);
             if (message.messageAddOnDurationInSecs != null && Object.hasOwnProperty.call(message, "messageAddOnDurationInSecs"))
                 writer.uint32(/* id 5, wireType 0 =*/40).uint32(message.messageAddOnDurationInSecs);
+            if (message.botMessageSecret != null && Object.hasOwnProperty.call(message, "botMessageSecret"))
+                writer.uint32(/* id 6, wireType 2 =*/50).bytes(message.botMessageSecret);
+            if (message.botMetadata != null && Object.hasOwnProperty.call(message, "botMetadata"))
+                $root.proto.BotMetadata.encode(message.botMetadata, writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
             return writer;
         };
 
@@ -52711,6 +54761,12 @@ $root.proto = (function() {
                     break;
                 case 5:
                     message.messageAddOnDurationInSecs = reader.uint32();
+                    break;
+                case 6:
+                    message.botMessageSecret = reader.bytes();
+                    break;
+                case 7:
+                    message.botMetadata = $root.proto.BotMetadata.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -52764,6 +54820,14 @@ $root.proto = (function() {
             if (message.messageAddOnDurationInSecs != null && message.hasOwnProperty("messageAddOnDurationInSecs"))
                 if (!$util.isInteger(message.messageAddOnDurationInSecs))
                     return "messageAddOnDurationInSecs: integer expected";
+            if (message.botMessageSecret != null && message.hasOwnProperty("botMessageSecret"))
+                if (!(message.botMessageSecret && typeof message.botMessageSecret.length === "number" || $util.isString(message.botMessageSecret)))
+                    return "botMessageSecret: buffer expected";
+            if (message.botMetadata != null && message.hasOwnProperty("botMetadata")) {
+                var error = $root.proto.BotMetadata.verify(message.botMetadata);
+                if (error)
+                    return "botMetadata." + error;
+            }
             return null;
         };
 
@@ -52798,6 +54862,16 @@ $root.proto = (function() {
                     message.paddingBytes = object.paddingBytes;
             if (object.messageAddOnDurationInSecs != null)
                 message.messageAddOnDurationInSecs = object.messageAddOnDurationInSecs >>> 0;
+            if (object.botMessageSecret != null)
+                if (typeof object.botMessageSecret === "string")
+                    $util.base64.decode(object.botMessageSecret, message.botMessageSecret = $util.newBuffer($util.base64.length(object.botMessageSecret)), 0);
+                else if (object.botMessageSecret.length)
+                    message.botMessageSecret = object.botMessageSecret;
+            if (object.botMetadata != null) {
+                if (typeof object.botMetadata !== "object")
+                    throw TypeError(".proto.MessageContextInfo.botMetadata: object expected");
+                message.botMetadata = $root.proto.BotMetadata.fromObject(object.botMetadata);
+            }
             return message;
         };
 
@@ -52832,6 +54906,14 @@ $root.proto = (function() {
                         object.paddingBytes = $util.newBuffer(object.paddingBytes);
                 }
                 object.messageAddOnDurationInSecs = 0;
+                if (options.bytes === String)
+                    object.botMessageSecret = "";
+                else {
+                    object.botMessageSecret = [];
+                    if (options.bytes !== Array)
+                        object.botMessageSecret = $util.newBuffer(object.botMessageSecret);
+                }
+                object.botMetadata = null;
             }
             if (message.deviceListMetadata != null && message.hasOwnProperty("deviceListMetadata"))
                 object.deviceListMetadata = $root.proto.DeviceListMetadata.toObject(message.deviceListMetadata, options);
@@ -52843,6 +54925,10 @@ $root.proto = (function() {
                 object.paddingBytes = options.bytes === String ? $util.base64.encode(message.paddingBytes, 0, message.paddingBytes.length) : options.bytes === Array ? Array.prototype.slice.call(message.paddingBytes) : message.paddingBytes;
             if (message.messageAddOnDurationInSecs != null && message.hasOwnProperty("messageAddOnDurationInSecs"))
                 object.messageAddOnDurationInSecs = message.messageAddOnDurationInSecs;
+            if (message.botMessageSecret != null && message.hasOwnProperty("botMessageSecret"))
+                object.botMessageSecret = options.bytes === String ? $util.base64.encode(message.botMessageSecret, 0, message.botMessageSecret.length) : options.bytes === Array ? Array.prototype.slice.call(message.botMessageSecret) : message.botMessageSecret;
+            if (message.botMetadata != null && message.hasOwnProperty("botMetadata"))
+                object.botMetadata = $root.proto.BotMetadata.toObject(message.botMetadata, options);
             return object;
         };
 
@@ -53112,6 +55198,256 @@ $root.proto = (function() {
         };
 
         return MessageKey;
+    })();
+
+    proto.MessageSecretMessage = (function() {
+
+        /**
+         * Properties of a MessageSecretMessage.
+         * @memberof proto
+         * @interface IMessageSecretMessage
+         * @property {number|null} [version] MessageSecretMessage version
+         * @property {Uint8Array|null} [encIv] MessageSecretMessage encIv
+         * @property {Uint8Array|null} [encPayload] MessageSecretMessage encPayload
+         */
+
+        /**
+         * Constructs a new MessageSecretMessage.
+         * @memberof proto
+         * @classdesc Represents a MessageSecretMessage.
+         * @implements IMessageSecretMessage
+         * @constructor
+         * @param {proto.IMessageSecretMessage=} [properties] Properties to set
+         */
+        function MessageSecretMessage(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * MessageSecretMessage version.
+         * @member {number} version
+         * @memberof proto.MessageSecretMessage
+         * @instance
+         */
+        MessageSecretMessage.prototype.version = 0;
+
+        /**
+         * MessageSecretMessage encIv.
+         * @member {Uint8Array} encIv
+         * @memberof proto.MessageSecretMessage
+         * @instance
+         */
+        MessageSecretMessage.prototype.encIv = $util.newBuffer([]);
+
+        /**
+         * MessageSecretMessage encPayload.
+         * @member {Uint8Array} encPayload
+         * @memberof proto.MessageSecretMessage
+         * @instance
+         */
+        MessageSecretMessage.prototype.encPayload = $util.newBuffer([]);
+
+        /**
+         * Creates a new MessageSecretMessage instance using the specified properties.
+         * @function create
+         * @memberof proto.MessageSecretMessage
+         * @static
+         * @param {proto.IMessageSecretMessage=} [properties] Properties to set
+         * @returns {proto.MessageSecretMessage} MessageSecretMessage instance
+         */
+        MessageSecretMessage.create = function create(properties) {
+            return new MessageSecretMessage(properties);
+        };
+
+        /**
+         * Encodes the specified MessageSecretMessage message. Does not implicitly {@link proto.MessageSecretMessage.verify|verify} messages.
+         * @function encode
+         * @memberof proto.MessageSecretMessage
+         * @static
+         * @param {proto.IMessageSecretMessage} message MessageSecretMessage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        MessageSecretMessage.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.version != null && Object.hasOwnProperty.call(message, "version"))
+                writer.uint32(/* id 1, wireType 5 =*/13).sfixed32(message.version);
+            if (message.encIv != null && Object.hasOwnProperty.call(message, "encIv"))
+                writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.encIv);
+            if (message.encPayload != null && Object.hasOwnProperty.call(message, "encPayload"))
+                writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.encPayload);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified MessageSecretMessage message, length delimited. Does not implicitly {@link proto.MessageSecretMessage.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof proto.MessageSecretMessage
+         * @static
+         * @param {proto.IMessageSecretMessage} message MessageSecretMessage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        MessageSecretMessage.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a MessageSecretMessage message from the specified reader or buffer.
+         * @function decode
+         * @memberof proto.MessageSecretMessage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {proto.MessageSecretMessage} MessageSecretMessage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        MessageSecretMessage.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.proto.MessageSecretMessage();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.version = reader.sfixed32();
+                    break;
+                case 2:
+                    message.encIv = reader.bytes();
+                    break;
+                case 3:
+                    message.encPayload = reader.bytes();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a MessageSecretMessage message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof proto.MessageSecretMessage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {proto.MessageSecretMessage} MessageSecretMessage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        MessageSecretMessage.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a MessageSecretMessage message.
+         * @function verify
+         * @memberof proto.MessageSecretMessage
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        MessageSecretMessage.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.version != null && message.hasOwnProperty("version"))
+                if (!$util.isInteger(message.version))
+                    return "version: integer expected";
+            if (message.encIv != null && message.hasOwnProperty("encIv"))
+                if (!(message.encIv && typeof message.encIv.length === "number" || $util.isString(message.encIv)))
+                    return "encIv: buffer expected";
+            if (message.encPayload != null && message.hasOwnProperty("encPayload"))
+                if (!(message.encPayload && typeof message.encPayload.length === "number" || $util.isString(message.encPayload)))
+                    return "encPayload: buffer expected";
+            return null;
+        };
+
+        /**
+         * Creates a MessageSecretMessage message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof proto.MessageSecretMessage
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {proto.MessageSecretMessage} MessageSecretMessage
+         */
+        MessageSecretMessage.fromObject = function fromObject(object) {
+            if (object instanceof $root.proto.MessageSecretMessage)
+                return object;
+            var message = new $root.proto.MessageSecretMessage();
+            if (object.version != null)
+                message.version = object.version | 0;
+            if (object.encIv != null)
+                if (typeof object.encIv === "string")
+                    $util.base64.decode(object.encIv, message.encIv = $util.newBuffer($util.base64.length(object.encIv)), 0);
+                else if (object.encIv.length)
+                    message.encIv = object.encIv;
+            if (object.encPayload != null)
+                if (typeof object.encPayload === "string")
+                    $util.base64.decode(object.encPayload, message.encPayload = $util.newBuffer($util.base64.length(object.encPayload)), 0);
+                else if (object.encPayload.length)
+                    message.encPayload = object.encPayload;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a MessageSecretMessage message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof proto.MessageSecretMessage
+         * @static
+         * @param {proto.MessageSecretMessage} message MessageSecretMessage
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        MessageSecretMessage.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.version = 0;
+                if (options.bytes === String)
+                    object.encIv = "";
+                else {
+                    object.encIv = [];
+                    if (options.bytes !== Array)
+                        object.encIv = $util.newBuffer(object.encIv);
+                }
+                if (options.bytes === String)
+                    object.encPayload = "";
+                else {
+                    object.encPayload = [];
+                    if (options.bytes !== Array)
+                        object.encPayload = $util.newBuffer(object.encPayload);
+                }
+            }
+            if (message.version != null && message.hasOwnProperty("version"))
+                object.version = message.version;
+            if (message.encIv != null && message.hasOwnProperty("encIv"))
+                object.encIv = options.bytes === String ? $util.base64.encode(message.encIv, 0, message.encIv.length) : options.bytes === Array ? Array.prototype.slice.call(message.encIv) : message.encIv;
+            if (message.encPayload != null && message.hasOwnProperty("encPayload"))
+                object.encPayload = options.bytes === String ? $util.base64.encode(message.encPayload, 0, message.encPayload.length) : options.bytes === Array ? Array.prototype.slice.call(message.encPayload) : message.encPayload;
+            return object;
+        };
+
+        /**
+         * Converts this MessageSecretMessage to JSON.
+         * @function toJSON
+         * @memberof proto.MessageSecretMessage
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        MessageSecretMessage.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return MessageSecretMessage;
     })();
 
     proto.Money = (function() {
@@ -81803,6 +84139,7 @@ $root.proto = (function() {
          * @property {string|null} [originalSelfAuthorUserJidString] WebMessageInfo originalSelfAuthorUserJidString
          * @property {number|Long|null} [revokeMessageTimestamp] WebMessageInfo revokeMessageTimestamp
          * @property {proto.IPinInChat|null} [pinInChat] WebMessageInfo pinInChat
+         * @property {proto.IFutureproofMessageSecretMessage|null} [futureproofMessageSecretMessage] WebMessageInfo futureproofMessageSecretMessage
          */
 
         /**
@@ -82178,6 +84515,14 @@ $root.proto = (function() {
         WebMessageInfo.prototype.pinInChat = null;
 
         /**
+         * WebMessageInfo futureproofMessageSecretMessage.
+         * @member {proto.IFutureproofMessageSecretMessage|null|undefined} futureproofMessageSecretMessage
+         * @memberof proto.WebMessageInfo
+         * @instance
+         */
+        WebMessageInfo.prototype.futureproofMessageSecretMessage = null;
+
+        /**
          * Creates a new WebMessageInfo instance using the specified properties.
          * @function create
          * @memberof proto.WebMessageInfo
@@ -82293,6 +84638,8 @@ $root.proto = (function() {
                 writer.uint32(/* id 52, wireType 0 =*/416).uint64(message.revokeMessageTimestamp);
             if (message.pinInChat != null && Object.hasOwnProperty.call(message, "pinInChat"))
                 $root.proto.PinInChat.encode(message.pinInChat, writer.uint32(/* id 54, wireType 2 =*/434).fork()).ldelim();
+            if (message.futureproofMessageSecretMessage != null && Object.hasOwnProperty.call(message, "futureproofMessageSecretMessage"))
+                $root.proto.FutureproofMessageSecretMessage.encode(message.futureproofMessageSecretMessage, writer.uint32(/* id 55, wireType 2 =*/442).fork()).ldelim();
             return writer;
         };
 
@@ -82468,6 +84815,9 @@ $root.proto = (function() {
                     break;
                 case 54:
                     message.pinInChat = $root.proto.PinInChat.decode(reader, reader.uint32());
+                    break;
+                case 55:
+                    message.futureproofMessageSecretMessage = $root.proto.FutureproofMessageSecretMessage.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -82748,6 +85098,7 @@ $root.proto = (function() {
                 case 180:
                 case 181:
                 case 182:
+                case 183:
                     break;
                 }
             if (message.clearMedia != null && message.hasOwnProperty("clearMedia"))
@@ -82889,6 +85240,11 @@ $root.proto = (function() {
                 var error = $root.proto.PinInChat.verify(message.pinInChat);
                 if (error)
                     return "pinInChat." + error;
+            }
+            if (message.futureproofMessageSecretMessage != null && message.hasOwnProperty("futureproofMessageSecretMessage")) {
+                var error = $root.proto.FutureproofMessageSecretMessage.verify(message.futureproofMessageSecretMessage);
+                if (error)
+                    return "futureproofMessageSecretMessage." + error;
             }
             return null;
         };
@@ -83713,6 +86069,10 @@ $root.proto = (function() {
             case 182:
                 message.messageStubType = 182;
                 break;
+            case "EMPTY_SUBGROUP_CREATE":
+            case 183:
+                message.messageStubType = 183;
+                break;
             }
             if (object.clearMedia != null)
                 message.clearMedia = Boolean(object.clearMedia);
@@ -83872,6 +86232,11 @@ $root.proto = (function() {
                     throw TypeError(".proto.WebMessageInfo.pinInChat: object expected");
                 message.pinInChat = $root.proto.PinInChat.fromObject(object.pinInChat);
             }
+            if (object.futureproofMessageSecretMessage != null) {
+                if (typeof object.futureproofMessageSecretMessage !== "object")
+                    throw TypeError(".proto.WebMessageInfo.futureproofMessageSecretMessage: object expected");
+                message.futureproofMessageSecretMessage = $root.proto.FutureproofMessageSecretMessage.fromObject(object.futureproofMessageSecretMessage);
+            }
             return message;
         };
 
@@ -83969,6 +86334,7 @@ $root.proto = (function() {
                 } else
                     object.revokeMessageTimestamp = options.longs === String ? "0" : 0;
                 object.pinInChat = null;
+                object.futureproofMessageSecretMessage = null;
             }
             if (message.key != null && message.hasOwnProperty("key"))
                 object.key = $root.proto.MessageKey.toObject(message.key, options);
@@ -84085,6 +86451,8 @@ $root.proto = (function() {
                     object.revokeMessageTimestamp = options.longs === String ? $util.Long.prototype.toString.call(message.revokeMessageTimestamp) : options.longs === Number ? new $util.LongBits(message.revokeMessageTimestamp.low >>> 0, message.revokeMessageTimestamp.high >>> 0).toNumber(true) : message.revokeMessageTimestamp;
             if (message.pinInChat != null && message.hasOwnProperty("pinInChat"))
                 object.pinInChat = $root.proto.PinInChat.toObject(message.pinInChat, options);
+            if (message.futureproofMessageSecretMessage != null && message.hasOwnProperty("futureproofMessageSecretMessage"))
+                object.futureproofMessageSecretMessage = $root.proto.FutureproofMessageSecretMessage.toObject(message.futureproofMessageSecretMessage, options);
             return object;
         };
 
@@ -84326,6 +86694,7 @@ $root.proto = (function() {
          * @property {number} PAYMENT_INVITE_SETUP_INVITEE_SEND_AND_RECEIVE=180 PAYMENT_INVITE_SETUP_INVITEE_SEND_AND_RECEIVE value
          * @property {number} LINKED_GROUP_CALL_START=181 LINKED_GROUP_CALL_START value
          * @property {number} REPORT_TO_ADMIN_ENABLED_STATUS=182 REPORT_TO_ADMIN_ENABLED_STATUS value
+         * @property {number} EMPTY_SUBGROUP_CREATE=183 EMPTY_SUBGROUP_CREATE value
          */
         WebMessageInfo.StubType = (function() {
             var valuesById = {}, values = Object.create(valuesById);
@@ -84512,6 +86881,7 @@ $root.proto = (function() {
             values[valuesById[180] = "PAYMENT_INVITE_SETUP_INVITEE_SEND_AND_RECEIVE"] = 180;
             values[valuesById[181] = "LINKED_GROUP_CALL_START"] = 181;
             values[valuesById[182] = "REPORT_TO_ADMIN_ENABLED_STATUS"] = 182;
+            values[valuesById[183] = "EMPTY_SUBGROUP_CREATE"] = 183;
             return values;
         })();
 
