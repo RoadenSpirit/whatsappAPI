@@ -7,3 +7,7 @@ The contributor and AI-agent guide lives in **[AGENTS.md](AGENTS.md)** — start
 For AI authorship disclosure rules and the broader AI policy, see **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** § AI Policy.
 
 For security-sensitive changes and vulnerability disclosure, see **[SECURITY.md](SECURITY.md)**.
+
+
+# Gentleman IA Integration
+This repo uses Engram and SDD rules. See **[GENTLEMAN_IA.md](GENTLEMAN_IA.md)** before writing any code.
