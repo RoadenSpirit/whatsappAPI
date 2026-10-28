@@ -6,8 +6,50 @@ import qrcode from 'qrcode'
 import { writeFileSync } from 'fs'
 import axios from 'axios'
 
-const logger = pino({ level: 'warn' })
+const logger = pino({ level: 'info' })
 let sock: any = undefined
+let currentQR: string | null = null
+let connectionStatus: 'connecting' | 'open' | 'close' = 'close'
+let connectedUser: any = null
+
+export function getWAStatus() {
+  return {
+    status: connectionStatus,
+    user: connectedUser,
+    hasQr: !!currentQR,
+    qr: currentQR
+  }
+}
+
+export async function resetWASession() {
+  try {
+    if (sock) {
+      try {
+        sock.end(new Error('Session reset requested'))
+      } catch (e) {}
+      sock = undefined
+    }
+    currentQR = null
+    connectionStatus = 'close'
+    connectedUser = null
+
+    // Respaldar y limpiar REDACTED_AUTH_SESSION
+    const fs = await import('fs')
+    const path = await import('path')
+    const authDir = path.resolve('REDACTED_AUTH_SESSION')
+    if (fs.existsSync(authDir)) {
+      const backupDir = path.resolve(`REDACTED_AUTH_SESSION_backup_${Date.now()}`)
+      fs.renameSync(authDir, backupDir)
+      console.log(`📦 Directorio REDACTED_AUTH_SESSION respaldado en: ${backupDir}`)
+    }
+
+    // Volver a iniciar socket
+    return await getWASocket()
+  } catch (err: any) {
+    console.error('❌ Error al reiniciar sesión de WhatsApp:', err.message)
+    throw err
+  }
+}
 
 export function formatJid(jid: string): string {
   if (!jid) return jid
@@ -96,6 +138,8 @@ export async function getWASocket() {
     const { connection, lastDisconnect, qr } = update
 
     if (qr) {
+      currentQR = qr
+      connectionStatus = 'connecting'
       // Intentar renderizar con caracteres grandes en la consola por si acaso
       qrcodeTerminal.generate(qr, { small: false })
       
@@ -110,11 +154,16 @@ export async function getWASocket() {
     }
 
     if (connection === 'open') {
+      connectionStatus = 'open'
+      connectedUser = sock.user
+      currentQR = null
       console.log('✅ Conexión de WhatsApp abierta correctamente!')
       console.log('👤 Usuario conectado:', sock.user)
     }
 
     if (connection === 'close') {
+      connectionStatus = 'close'
+      connectedUser = null
       const shouldReconnect =
         (lastDisconnect?.error as Boom)?.output?.statusCode !== DisconnectReason.loggedOut
       logger.info({ shouldReconnect }, 'Connection closed, reconnecting...')
@@ -216,6 +265,26 @@ export async function listGroups(): Promise<any[]> {
     }))
   }
   return []
+}
+
+export async function getGroupParticipants(groupId: string) {
+  if (!groupId.endsWith('@g.us')) {
+    throw Object.assign(new Error('groupId must end with @g.us'), { statusCode: 400 })
+  }
+  const socket = await getWASocket()
+  const meta = await socket.groupMetadata(groupId)
+  return {
+    id: meta.id,
+    subject: meta.subject,
+    addressingMode: meta.addressingMode,
+    size: meta.size,
+    participants: meta.participants.map((p: any) => ({
+      id: p.id,
+      phoneNumber: p.phoneNumber ?? null,
+      lid: p.lid ?? null,
+      admin: p.admin ?? null
+    }))
+  }
 }
 
 export async function listContacts(): Promise<string[]> {

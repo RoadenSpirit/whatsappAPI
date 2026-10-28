@@ -3,9 +3,13 @@
 .yarn/
 *.tgz
 */.DS_Store
-REDACTED_AUTH_SESSION*.json
-baileys_REDACTED_AUTH_SESSION*
-baileys_store*.json
+REDACTED_AUTH_SESSION/
+REDACTED_AUTH_SESSION*/
+downloads/
+qr.png
+.agents/
+.engram/
+
 browser-messages.json
 browser-token.json
 decoded-ws.json

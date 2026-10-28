@@ -39,5 +39,8 @@
 
 
 
+## Características Completadas
+- [x] Documentación completa de la API Baileys (Endpoints, autenticación, payloads y webhooks).
+
 ## Características Pendientes
 - [ ] Implementar el paquete `auto skills` de `midu dev`.
