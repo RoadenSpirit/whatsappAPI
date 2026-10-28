@@ -65,7 +65,7 @@ graph TD
 *   **Antipatrón detectado:** El usuario introdujo credenciales reales y contraseñas temporales en los prompts para que el agente hiciera pruebas o configuraciones de SSH/Docker.
 *   **Ejemplo de prompt:**
     > *"Fahrenehit451/314159 prueba con esta o sino Fahrenheit451"*
-    > *"usa la sigueitne api key REDACTED_BAILEYS_API_KEY guardala en la vps en le proyetco"*
+    > *"usa la siguiente api key <TU_API_KEY> guardala en la vps en el proyecto"*
 *   **Crítica:** Compartir claves de API y contraseñas de VPS en el historial de chat con un LLM expone los secretos a los logs de la plataforma y viola las políticas de seguridad.
 
 ### c) Control de Alcance (Scope Control)

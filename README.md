@@ -4,11 +4,40 @@ Esta es una API ligera construida sobre la librería **Baileys** (un cliente Typ
 
 ---
 
+## 🏛️ Arquitectura del Sistema
+
+```mermaid
+flowchart LR
+    subgraph WhatsApp["Servidores de Meta"]
+        WS["WhatsApp Web Socket\n(Multi-Device Protocol)"]
+    end
+
+    subgraph Gateway["Microservicio: whatsappAPI (:3000)"]
+        Server["Express REST API\n(lib/server.js)"]
+        BaileysCore["Baileys Engine\n(Socket Handler)"]
+        AuthStorage[("Almacén Local de Claves\nREDACTED_AUTH_SESSION/ (Signal Protocol)")]
+    end
+
+    subgraph Clientes["Clientes Internos (Docker Network: n8n-network)"]
+        N8NApp["n8n Automation Engine\n(Workers & Gestores)"]
+        RobertoBot["ROBERTO Agent\n(Atención Automatizada)"]
+    end
+
+    WS <-->|Conexión TLS Persistente| BaileysCore
+    BaileysCore <--> AuthStorage
+    Server <--> BaileysCore
+    N8NApp -->|POST /send-file (header x-api-key)| Server
+    RobertoBot -->|POST /send (header x-api-key)| Server
+    BaileysCore -->|Webhook POST eventos entrantes| N8NApp
+```
+
+---
+
 ## 🔒 Seguridad e Infraestructura
 
 1. **Autenticación por API Key:**
    Todas las rutas principales (excepto la obtención de la imagen QR en navegador) requieren la cabecera `x-api-key`.
-   - **Clave configurada:** `REDACTED_BAILEYS_API_KEY` (almacenada de forma segura en el archivo local `.env` del VPS).
+   - **Clave configurada:** Parametrizada mediante variable `API_KEY` (almacenada en `.env` local).
 
 2. **Privacidad de Sesión:**
    Las claves de cifrado y el estado de la sesión de WhatsApp se almacenan en el directorio `REDACTED_AUTH_SESSION/`. Este directorio **nunca** debe compartirse ni subirse a repositorios públicos, ya que otorga acceso total a la cuenta de WhatsApp vinculada.
@@ -26,7 +55,7 @@ La API escucha de manera predeterminada en el puerto `3000` de tu VPS.
 Verifica que el servidor de la API está levantado y respondiendo.
 - **Método:** `GET`
 - **Ruta:** `/health`
-- **Cabecera requerida:** `x-api-key: REDACTED_BAILEYS_API_KEY`
+- **Cabecera requerida:** `x-api-key: <TU_API_KEY>`
 - **Respuesta:**
   ```json
   { "status": "OK" }
@@ -36,7 +65,7 @@ Verifica que el servidor de la API está levantado y respondiendo.
 Dispara la conexión interna de WhatsApp. Si no hay sesión previa activa, genera el código QR.
 - **Método:** `POST`
 - **Ruta:** `/auth/qr`
-- **Cabecera requerida:** `x-api-key: REDACTED_BAILEYS_API_KEY`
+- **Cabecera requerida:** `x-api-key: <TU_API_KEY>`
 - **Respuesta:**
   ```json
   { "message": "QR generated in console. Scan it with WhatsApp." }
@@ -55,7 +84,7 @@ Envía un mensaje a un número individual o a un grupo.
 - **Método:** `POST`
 - **Ruta:** `/send`
 - **Cabecera requerida:**
-  - `x-api-key: REDACTED_BAILEYS_API_KEY`
+  - `x-api-key: <TU_API_KEY>`
   - `Content-Type: application/json`
 - **Cuerpo (JSON):**
   ```json
@@ -75,7 +104,7 @@ Permite enviar archivos mediante dos métodos opcionales (Multipart Upload o URL
 - **Método:** `POST`
 - **Ruta:** `/send-file`
 - **Cabecera requerida:**
-  - `x-api-key: REDACTED_BAILEYS_API_KEY`
+  - `x-api-key: <TU_API_KEY>`
 
 #### Modalidad A: Mediante URL de descarga (JSON)
 - **Content-Type:** `application/json`
@@ -106,13 +135,13 @@ Permite enviar archivos mediante dos métodos opcionales (Multipart Upload o URL
 Devuelve una lista de los IDs de los grupos en los que participa la cuenta vinculada (disponible una vez completada la sincronización inicial de la cuenta).
 - **Método:** `GET`
 - **Ruta:** `/groups`
-- **Cabecera requerida:** `x-api-key: REDACTED_BAILEYS_API_KEY`
+- **Cabecera requerida:** `x-api-key: <TU_API_KEY>`
 
 ### 7. Listar Contactos Recientes
 Devuelve los identificadores de chats de los contactos recientes.
 - **Método:** `GET`
 - **Ruta:** `/contacts`
-- **Cabecera requerida:** `x-api-key: REDACTED_BAILEYS_API_KEY`
+- **Cabecera requerida:** `x-api-key: <TU_API_KEY>`
 
 ---
 

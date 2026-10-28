@@ -6,7 +6,7 @@
 - **Compilación de Dependencias Nativas en Alpine:** Instalada la biblioteca `libc6-compat` en el contenedor Alpine y reconstruido el módulo nativo `sharp` para procesar y adjuntar miniaturas legítimas a las imágenes de forma local.
 - **Despliegue y Permisos:** API corriendo en contenedor Docker (`node:20-alpine`) en el puerto 3000 de forma aislada, utilizando volúmenes locales. Operado bajo el usuario `carmay-dev` sin `sudo`.
 - **Sesión Activa:** La sesión de WhatsApp de trabajo está vinculada correctamente y almacenada de forma persistente en `REDACTED_AUTH_SESSION/`.
-- **API Key Segura:** Validaciones activadas en todas las llamadas entrantes usando la clave `REDACTED_BAILEYS_API_KEY`.
+- **API Key Segura:** Validaciones activadas en todas las llamadas entrantes usando la clave configurada en `API_KEY`.
 - **Monitoreo de Mensajes Entrantes (Nuevo):** Implementado el evento `messages.upsert` en `whatsapp.ts` para detectar mensajes entrantes en tiempo real. Configurada una respuesta automática instantánea de saludo ("¡Hola!") y el reenvío a la variable `WEBHOOK_URL` de n8n si se encuentra configurada en el `.env`.
 - **Persistencia de Docker:** Actualizada la política de reinicio del contenedor `baileys-sales-api` a `--restart unless-stopped` para garantizar que inicie automáticamente cuando se reinicie el servidor VPS.
 
