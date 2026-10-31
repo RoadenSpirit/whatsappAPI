@@ -1,5 +1,7 @@
 .DS_Store
 .env
+auth_info/
+auth_info_backup*/
 .yarn/
 *.tgz
 */.DS_Store
