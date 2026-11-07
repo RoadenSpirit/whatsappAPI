@@ -1,19 +1,37 @@
+import 'dotenv/config'
 import express, { type Request, type Response, type NextFunction } from 'express'
 import helmet from 'helmet'
 import cors from 'cors'
 import multer from 'multer'
 import qrcode from 'qrcode'
 import { sendMessage, listGroups, listContacts, getGroupParticipants, getWASocket, getWAStatus, resetWASession, sendWASocketFile, sendWASocketFileByUrl } from './whatsapp'
+// @ts-ignore
+import { secureSend } from './secure-send.js'
+import { handleDulceriaOrder } from './dulceria-order.js'
 
 const app = express()
 const upload = multer({ limits: { fileSize: 50 * 1024 * 1024 } })
-app.use(express.json())
+app.use(express.json({ limit: '50mb' }))
+app.use(express.urlencoded({ limit: '50mb', extended: true }))
 app.use(helmet({ contentSecurityPolicy: false }))
 app.use(cors())
 
 const API_KEY = process.env.API_KEY || 'CHANGE_ME'
 
 function requireApiKey(req: Request, res: Response, next: NextFunction) {
+  // El endpoint seguro /send/carmay usa su propio token (WEB_ACCESS_TOKEN),
+  // y los endpoints de dulcería son públicos y auto-validados.
+  // Caddy aplica 'uri strip_prefix /api/wa', por lo que a Express le llega '/order/dulceria'.
+  if (
+    req.path === '/send/carmay' || 
+    req.path.startsWith('/send/carmay') || 
+    req.path === '/order/dulceria' || 
+    req.path === '/api/order/dulceria' || 
+    req.path === '/api/wa/order/dulceria'
+  ) {
+    next()
+    return
+  }
   const key = req.header('x-api-key') || req.query.key
   if (key !== API_KEY) {
     res.status(401).json({ error: 'Invalid API key' })
@@ -21,7 +39,6 @@ function requireApiKey(req: Request, res: Response, next: NextFunction) {
   }
   next()
 }
-
 app.use(requireApiKey)
 
 app.get('/auth/qr/status', (_: Request, res: Response) => {
@@ -51,17 +68,17 @@ app.get('/auth/qr/image', async (req: Request, res: Response) => {
       return
     } catch (e) {}
   }
-  res.sendFile('/app/qr.png')
+  res.status(404).json({ error: 'QR not available or session already connected' })
 })
 
 app.get('/auth/qr/view', (req: Request, res: Response) => {
   const key = (req.query.key || '').toString()
   const html = `<!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WhatsApp QR Live - Carmay</title>
+  <title>WhatsApp Gateway API</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #121b22; color: #e9edef; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
@@ -85,8 +102,8 @@ app.get('/auth/qr/view', (req: Request, res: Response) => {
 </head>
 <body>
   <div class="card">
-    <h1>WhatsApp Carmay API</h1>
-    <p class="subtitle">Escanea el código QR desde WhatsApp &gt; Dispositivos vinculados</p>
+    <h1>WhatsApp Gateway API</h1>
+    <p class="subtitle">Scan the QR code from WhatsApp &gt; Linked Devices</p>
     <div id="statusContainer">
       <div class="status-badge status-connecting"><span class="pulse">●</span> Verificando estado...</div>
     </div>
@@ -228,6 +245,27 @@ app.get('/contacts', async (_: Request, res: Response) => {
 
 app.get('/health', (_: Request, res: Response) => {
   res.json({ status: 'OK' })
+})
+
+// Endpoint seguro para la web estática (CarmayWeb).
+// La key real de Baileys NUNCA llega al cliente: solo se envía un token
+// de acceso (llave débil) y los datos limpios. El Baileys agrega la key real
+// internamente y, si se configuró, valida que el producto existe en products.db.
+app.post('/send/carmay', async (req: Request, res: Response) => {
+  await secureSend(req, res)
+})
+
+// Endpoint público dedicado y blindado para Dulcería El Líder:
+// Valida esquema del pedido, recalcula precios contra catálogo y despacha doble mensaje (Jefa Ania + Cliente).
+app.post(['/order/dulceria', '/api/order/dulceria', '/api/wa/order/dulceria'], async (req: Request, res: Response) => {
+  try {
+    const ip = req.ip || req.socket.remoteAddress || 'unknown'
+    const result = await handleDulceriaOrder(req.body, ip)
+    res.json(result)
+  } catch (err: any) {
+    const status = err.status || 500
+    res.status(status).json({ error: err.message || 'Error procesando encargo de dulcería' })
+  }
 })
 
 

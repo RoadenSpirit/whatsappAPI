@@ -5,8 +5,6 @@ auth_info_backup*/
 .yarn/
 *.tgz
 */.DS_Store
-REDACTED_AUTH_SESSION/
-REDACTED_AUTH_SESSION*/
 downloads/
 qr.png
 .agents/
@@ -30,3 +28,8 @@ test.ts
 TestData
 wa-logs*
 coverage
+
+# Base de datos SQLite de productos (escrita por n8n, leída por Baileys)
+products.db
+products.db-wal
+products.db-shm

@@ -140,17 +140,7 @@ export async function getWASocket() {
     if (qr) {
       currentQR = qr
       connectionStatus = 'connecting'
-      // Intentar renderizar con caracteres grandes en la consola por si acaso
       qrcodeTerminal.generate(qr, { small: false })
-      
-      try {
-        // Guardar como imagen PNG en la carpeta raíz
-        const buffer = await qrcode.toBuffer(qr)
-        writeFileSync('qr.png', buffer)
-        console.log('📌 Imagen QR guardada como qr.png en la carpeta raíz del proyecto.')
-      } catch (err) {
-        logger.error(err, 'Error generando imagen QR')
-      }
     }
 
     if (connection === 'open') {
@@ -250,6 +240,9 @@ export async function getWASocket() {
 
 export async function sendMessage(chatId: string, text: string): Promise<void> {
   const socket = await getWASocket()
+  if (!socket || !socket.user) {
+    throw new Error('El bot de WhatsApp (Roberto) no tiene la sesión activa o conectada')
+  }
   const formattedChatId = formatJid(chatId)
   const msg: AnyMessageContent = { text }
   await socket.sendMessage(formattedChatId, msg)
